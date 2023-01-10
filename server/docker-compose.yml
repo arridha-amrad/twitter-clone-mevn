@@ -1,0 +1,16 @@
+services:
+  db:
+    container_name: pg_tc
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ari
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: twitter_clone
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_tc_data:/var/lib/postgresql/data
+
+volumes:
+  pg_tc_data:
