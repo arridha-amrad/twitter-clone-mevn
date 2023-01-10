@@ -21,3 +21,9 @@ li {
   height: 3.5rem;
   object-fit: cover;
 }
+
+.small-logo {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+}

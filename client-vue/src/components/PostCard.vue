@@ -12,7 +12,7 @@
         </div>
         <div @click.stop="" id="post-content-action" class="d-flex gap-2 align-items-center">
           <LikePost :post="post" />
-          <CommentButton :postId="post.id" />
+          <CommentButton :post="post" />
         </div>
       </div>
     </div>
@@ -26,7 +26,6 @@ import { IPostWithParents } from "@/stores/types/post.types"
 import { useRouter } from "vue-router";
 import LikePost from "@/features/LikePost.vue";
 import CommentButton from "./CommentButton.vue";
-import Modal from './Modal.vue';
 const props = defineProps<{
   post: IPostWithParents
 }>()

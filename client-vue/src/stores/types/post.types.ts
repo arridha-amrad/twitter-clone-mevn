@@ -38,3 +38,8 @@ export type Media = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type CreateCommentDTO = {
+  body: string;
+  postId: string;
+};

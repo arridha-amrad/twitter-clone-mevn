@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import Modal from '@/components/Modal.vue';
 import PostCard from '@/components/PostCard.vue';
 import postStore from '@/stores/postStore';
 import { onMounted } from 'vue';

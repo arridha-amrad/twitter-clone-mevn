@@ -1,13 +1,31 @@
 import axiosInstance from "@/utils/axiosInterceptor";
-
+import { Toast } from "bootstrap";
 import { defineStore } from "pinia";
-import { IPostWithParents } from "./types/post.types";
+import { CreateCommentDTO, IPostWithParents } from "./types/post.types";
+
+const liveToast = document.getElementById("liveToast");
+const toast = new Toast(liveToast!);
 
 const postStore = defineStore("post", {
   state: () => ({
     posts: [] as IPostWithParents[],
+    toast,
   }),
   actions: {
+    async createComment(body: CreateCommentDTO) {
+      try {
+        const { data } = await axiosInstance.post(
+          "/posts/create-comment",
+          body
+        );
+        const post = this.posts.find((post) => post.id === body.postId);
+        if (!post) return;
+        post._count.children++;
+        this.posts.splice(0, 0, data.comment);
+      } catch (err: any) {
+        throw err.response;
+      }
+    },
     async getPosts() {
       try {
         const { data } = await axiosInstance.get("/posts");
