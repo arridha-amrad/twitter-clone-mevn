@@ -6,10 +6,9 @@
           <Sidebar />
         </div>
         <div class="col-lg-5 p-3">
-          <CreatePostFeature />
-          <LoadPostsFeature />
+          <h1>This is profile page</h1>
         </div>
-        <div class="col-lg-4 p-3">
+        <div class="col-lg-4 bg-danger bg-opacity-10 p-3">
           <SearchInput />
         </div>
       </div>
@@ -20,6 +19,4 @@
 <script setup lang="ts">
 import Sidebar from "@/components/Sidebar.vue"
 import SearchInput from "@/components/SearchInput.vue"
-import CreatePostFeature from "@/features/CreatePostFeature.vue"
-import LoadPostsFeature from '@/features/LoadPostsFeature.vue';
 </script>

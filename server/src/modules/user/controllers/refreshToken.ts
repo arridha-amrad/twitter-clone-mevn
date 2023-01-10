@@ -31,7 +31,6 @@ const refreshToken = async (req: Request, res: Response) => {
     res.cookie("token", newBearerRefToken, cookieOptions);
     return res.status(200).json({ user, token: bearerAccToken });
   } catch (err) {
-    console.log("ref token controller error : ", err);
     return res.sendStatus(500);
   }
 };

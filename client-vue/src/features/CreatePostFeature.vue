@@ -6,26 +6,35 @@
     </div>
     <button :disabled="isLoading" type="submit" class="btn btn-primary">Create Post</button>
   </form>
-
-  <div class="position-absolute bottom-0 start-50 translate-middle-x">
-    <div class="alert alert-success text-center">New post created <strong>successfully</strong></div>
+  <div v-if="isShow" class="position-fixed fixed-bottom start-50 w-25 translate-middle-x">
+    <div class="alert alert-primary text-center">New post created <strong>successfully</strong>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import postStore from '@/stores/postStore';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 const store = postStore()
-const body = ref("")
 const isLoading = ref(false)
+const isShow = ref(false)
+const body = ref("")
+watch(
+  isShow,
+  (val) => val && setTimeout(() => { isShow.value = false }, 1000))
 
 const submit = async () => {
   const b = body.value
-  if (!body) return
+  if (!b) return
   try {
+    isLoading.value = true
     await store.createPost(b)
+    isShow.value = true
+    body.value = ""
   } catch (err) {
     console.log("err : ", err)
+  } finally {
+    isLoading.value = false
   }
 }
 

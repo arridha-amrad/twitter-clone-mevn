@@ -14,12 +14,32 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/profile",
+    component: lazyLoad("Profile"),
+    meta: {
+      protected: true,
+    },
+  },
+  {
+    path: "/posts/:id",
+    component: lazyLoad("PostDetail"),
+    meta: {
+      protected: true,
+    },
+  },
+  {
     path: "/login",
     component: lazyLoad("Login"),
+    meta: {
+      protected: false,
+    },
   },
   {
     path: "/register",
     component: lazyLoad("Register"),
+    meta: {
+      protected: false,
+    },
   },
 ];
 
@@ -42,16 +62,6 @@ router.beforeEach(async (to, from) => {
           path: "/login",
         };
       }
-    }
-  } else {
-    // user not allowed to go to login/register page if they are authenticated
-    if (
-      (authUserStore.isAuthenticated && to.path === "/login") ||
-      to.path === "/register"
-    ) {
-      return {
-        path: from.fullPath,
-      };
     }
   }
 });
