@@ -1,38 +1,50 @@
 <template>
-  <button @click="show" id="btn-modal" type="button" class="btn btn-outline-success btn-sm">
-    {{ post._count.children }} Comments
-  </button>
-  <Modal />
+  <button @click="toggle" class="btn btn-outline-success">Comments</button>
+  <div v-if="isShow" @click="toggle" class="my-modal">
+    <div class="my-modal__overlay" />
+    <div class="my-modal__container p-3 bg-body-secondary ">
+      <div @click.stop="" class="d-flex justify-content-center">
+        <CreatePostComment :post-id="postId" />
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script setup lang="ts">
-import { IPostWithParents } from '@/stores/post.types';
-import timeSetter from '@/utils/timeSetter';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
+import Modal from './Modal.vue';
+import CreatePostComment from '@/features/CreatePostComment.vue';
 
-import postStore from '@/stores/postStore';
-
-const avatar = computed(() => {
-  const url = props.post.author.imageURL
-  if (url === "default") return "/default.png"
-  return url
-})
-const props = defineProps<{ post: IPostWithParents }>()
-const myPost = ref<IPostWithParents | null>(null)
-watch(() => props.post.id, (id) => {
-  console.log("id : ", id);
-  const currPost = store.posts.find((post) => post.id === id)
-  if (currPost) {
-    myPost.value = currPost
-  }
-})
-const store = postStore()
-const date = computed(() => timeSetter(props.post.createdAt.toString()))
-const show = () => {
-  isShow.value = true
-  // const modalLiveExample = document.getElementById('exampleModal')
-  // const modal = new Mdl(modalLiveExample!)
-  // modal.show()
-}
 const isShow = ref(false)
+const toggle = () => isShow.value = !isShow.value
+const props = defineProps<{ postId: string }>()
+
 </script>
+
+<style scoped>
+.my-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+.my-modal__overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.my-modal__container {
+  z-index: 100;
+}
+</style>

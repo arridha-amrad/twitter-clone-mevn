@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { IPostWithParents } from '@/stores/post.types';
+import { IPostWithParents } from '@/stores/types/post.types.types.js';
 import postStore from '@/stores/postStore';
 import { computed } from 'vue';
 const props = defineProps<{ post: IPostWithParents }>()

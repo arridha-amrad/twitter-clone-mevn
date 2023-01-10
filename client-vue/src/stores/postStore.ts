@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axiosInterceptor";
 
 import { defineStore } from "pinia";
-import { IPostWithParents } from "./post.types";
+import { IPostWithParents } from "./types/post.types";
 
 const postStore = defineStore("post", {
   state: () => ({

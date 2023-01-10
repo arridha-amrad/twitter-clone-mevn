@@ -1,12 +1,9 @@
 <template>
-  <ul class="mt-5">
-    <li v-for="post in store.posts">
-      <PostCard :post="post" />
-    </li>
-  </ul>
+  <PostCard class="mt-4" v-for="post in store.posts" :post="post" />
 </template>
 
 <script setup lang="ts">
+import Modal from '@/components/Modal.vue';
 import PostCard from '@/components/PostCard.vue';
 import postStore from '@/stores/postStore';
 import { onMounted } from 'vue';

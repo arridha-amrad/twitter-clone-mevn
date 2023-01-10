@@ -1,23 +1,6 @@
 import axiosInstance, { setToken } from "@/utils/axiosInterceptor";
 import { defineStore } from "pinia";
-
-type User = {
-  id: string;
-  username: string;
-  email: string;
-  imageURL: string;
-};
-
-type RegisterDTO = {
-  username: string;
-  email: string;
-  password: string;
-};
-
-type LoginDTO = {
-  identity: string;
-  password: string;
-};
+import { LoginDTO, RegisterDTO, User } from "./types/user.types";
 
 const authStore = defineStore("auth", {
   state: () => ({

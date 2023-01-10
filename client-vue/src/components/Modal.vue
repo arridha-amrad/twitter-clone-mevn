@@ -1,31 +1,24 @@
 <template>
-  <div class="modal">
-    <div class="modal-overlay"></div>
-    <h1>ok</h1>
+  <div class="modal fade" :id="modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button @click="check" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{ modalId: string }>()
+const check = () => console.log(props.modalId);
 </script>
-
-<style scoped>
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-</style>
