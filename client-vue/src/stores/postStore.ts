@@ -12,12 +12,6 @@ const postStore = defineStore("post", {
     comments: [] as IPostWithParents[],
   }),
   actions: {
-    resetPost() {
-      this.posts = [];
-    },
-    setPost(post: IPostWithParentsAndChildren) {
-      this.posts.push(post);
-    },
     async getChildren(postId: string) {
       try {
         const { data } = await axiosInstance.get(`/posts/children/${postId}`);

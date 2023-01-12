@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import PostCard from '@/components/PostCard.vue';
 import postStore from '@/stores/postStore';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 
 const store = postStore()
 

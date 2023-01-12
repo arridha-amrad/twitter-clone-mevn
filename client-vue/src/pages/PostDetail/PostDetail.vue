@@ -61,8 +61,8 @@ const findPost = async () => {
   const post = store.posts.find((post) => post.id === postId.value)
   try {
     if (post) {
-      store.resetPost()
-      store.setPost(post)
+      store.posts = []
+      store.posts.push(post)
       await store.getChildren(postId.value)
     } else {
       await store.getOnePost(postId.value)

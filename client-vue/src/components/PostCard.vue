@@ -3,13 +3,20 @@
     <div class="card-body d-flex gap-3 align-items-start">
       <img class="avatar rounded-circle border" :src="avatar" alt="avatar">
       <div id="post-content" class="flex-fill">
-        <div class="d-flex align-items-center gap-2 text-black-50 fs-6">
+        <div class="d-flex align-items-center gap-2 fs-6">
           <div class="fw-bold ">{{ post.author.username }}</div>
-          <div class="">{{ date }}</div>
+          <span class="text-secondary">&bull;</span>
+          <div class="text-black-50 fs-6">{{ date }}</div>
         </div>
+        <small v-if="parents.length > 0">
+          <ul class="d-flex flex-wrap gap-1 text-primary">
+            Replying to
+            <li v-for="user in users">
+              @{{ user }}
+            </li>
+          </ul>
+        </small>
         <p class="card-text">{{ post.body }}</p>
-        <div class="d-flex align-items-center justify-content-between w-100">
-        </div>
         <div @click.stop="" id="post-content-action" class="d-flex gap-2 align-items-center">
           <LikePost :post="post" />
           <CommentButton :post="post" />
@@ -26,6 +33,10 @@ import { IPostWithParents } from "@/stores/types/post.types"
 import { useRouter } from "vue-router";
 import LikePost from "@/features/LikePost.vue";
 import CommentButton from "./CommentButton.vue";
+
+const parents = computed(() => props.post.parents ?? [])
+const users = computed(() => new Set(parents.value.map((user) => user.author.username)))
+
 const props = defineProps<{
   post: IPostWithParents,
 }>()

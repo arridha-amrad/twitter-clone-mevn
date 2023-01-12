@@ -6,7 +6,7 @@
 </style>
 
 <template>
-  <section class="position-relative d-flex flex-column gap-2 ms-3 w-75">
+  <section class="d-flex flex-column gap-2 ms-3 w-75">
     <div>
       <img class="logo" src="/logo.png" />
     </div>
