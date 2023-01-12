@@ -10,26 +10,14 @@
 
 <script setup lang="ts">
 import postStore from '@/stores/postStore';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
+import { showToast } from "@/utils/toastHandler"
 
 const store = postStore()
 const isLoading = ref(false)
 const isShow = ref(false)
 const body = ref("")
-const toastMessage = ref("")
-const toastType = ref<"success" | "error">("error")
 
-watch(
-  isShow,
-  (val) => {
-    if (val) {
-      setTimeout(() => {
-        isShow.value = false;
-        toastMessage.value = ""
-        toastType.value = "success"
-      }, 5000)
-    }
-  })
 
 const submit = async () => {
   const b = body.value
@@ -38,13 +26,10 @@ const submit = async () => {
     isLoading.value = true
     await store.createPost(b)
     isShow.value = true
-    toastMessage.value = "New tweet created successfully"
-    toastType.value = "success"
     body.value = ""
+    showToast("Post created successfully")
   } catch (err) {
     console.log("err : ", err)
-    toastMessage.value = "Failed to create tweet"
-    toastType.value = "error"
   } finally {
     isLoading.value = false
   }

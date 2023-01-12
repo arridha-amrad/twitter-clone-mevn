@@ -9,6 +9,10 @@ export type IPostWithParents = IPost & {
   parents: IPost[];
 };
 
+export type IPostWithParentsAndChildren = IPostWithParents & {
+  children: IPostWithParents[];
+};
+
 export interface IPostCount {
   children: number;
   likes: number;

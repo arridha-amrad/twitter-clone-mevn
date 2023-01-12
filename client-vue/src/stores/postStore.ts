@@ -1,27 +1,58 @@
 import axiosInstance from "@/utils/axiosInterceptor";
 import { Toast } from "bootstrap";
 import { defineStore } from "pinia";
-import { CreateCommentDTO, IPostWithParents } from "./types/post.types";
+import {
+  CreateCommentDTO,
+  IPostWithParentsAndChildren,
+} from "./types/post.types";
 
 const liveToast = document.getElementById("liveToast");
 const toast = new Toast(liveToast!);
 
 const postStore = defineStore("post", {
   state: () => ({
-    posts: [] as IPostWithParents[],
+    posts: [] as IPostWithParentsAndChildren[],
     toast,
   }),
   actions: {
-    async createComment(body: CreateCommentDTO) {
+    resetPost() {
+      this.posts = [];
+    },
+    setPost(post: IPostWithParentsAndChildren) {
+      this.posts.push(post);
+    },
+    async getChildren(postId: string) {
+      try {
+        const { data } = await axiosInstance.get(`/posts/children/${postId}`);
+        return data.children;
+      } catch (err: any) {
+        throw err.response;
+      }
+    },
+    async getOnePost(postId: string) {
+      try {
+        const { data } = await axiosInstance.get(`/posts/detail/${postId}`);
+        this.posts = [];
+        this.posts.push(data.post);
+        return data.post;
+      } catch (err: any) {
+        throw err.response;
+      }
+    },
+    async createComment(body: CreateCommentDTO, isFromDetailPage = false) {
       try {
         const { data } = await axiosInstance.post(
           "/posts/create-comment",
           body
         );
-        const post = this.posts.find((post) => post.id === body.postId);
-        if (!post) return;
-        post._count.children++;
-        this.posts.splice(0, 0, data.comment);
+        if (isFromDetailPage) {
+          this.posts[0].children.splice(0, 0, data.comment);
+        } else {
+          const post = this.posts.find((post) => post.id === body.postId);
+          if (!post) return;
+          post._count.children++;
+          this.posts.splice(0, 0, data.comment);
+        }
       } catch (err: any) {
         throw err.response;
       }
@@ -57,6 +88,7 @@ const postStore = defineStore("post", {
         } else {
           post._count.likes--;
         }
+        return data;
       } catch (err: any) {
         throw err.response;
       }

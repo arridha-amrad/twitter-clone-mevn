@@ -1,5 +1,5 @@
 <template>
-  <button @click.stop="like" :class="['btn', 'btn-sm', likeBtn]">{{ post._count.likes }} Like</button>
+  <button @click="like" :class="['btn', 'btn-sm', likeBtn]">{{ post._count.likes }} Like</button>
 
 </template>
 

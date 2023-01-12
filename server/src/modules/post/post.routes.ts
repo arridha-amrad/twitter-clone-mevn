@@ -4,12 +4,16 @@ import createComment from "./controllers/createComment";
 import createPost from "./controllers/createPost";
 import getPosts from "./controllers/getPosts";
 import likePost from "./controllers/likePost";
+import getOnePost from "./controllers/getOnePost";
+import getPostChildren from "./controllers/getPostChildren";
 
 const router = express.Router();
 
 router.post("/create-post", verifyAuthToken, createPost);
 router.post("/like-post", verifyAuthToken, likePost);
 router.post("/create-comment", verifyAuthToken, createComment);
+router.get("/detail/:postId", verifyAuthToken, getOnePost);
+router.get("/children/:postId", verifyAuthToken, getPostChildren);
 router.get("/", verifyAuthToken, getPosts);
 
 export default router;

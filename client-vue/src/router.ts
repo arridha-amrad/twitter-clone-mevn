@@ -23,6 +23,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/posts/:id",
     component: lazyLoad("PostDetail"),
+    name: "PostDetail",
     meta: {
       protected: true,
     },

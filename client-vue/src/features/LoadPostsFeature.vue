@@ -1,5 +1,5 @@
 <template>
-  <PostCard class="mt-4" v-for="post in store.posts" :post="post" />
+  <PostCard class="mt-4" v-for="post in store.posts" :post="post" :key="post.id" />
 </template>
 
 <script setup lang="ts">

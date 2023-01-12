@@ -6,20 +6,22 @@
 </style>
 
 <template>
-  <section class="position-relative d-flex flex-column gap-2 ms-3">
+  <section class="position-relative d-flex flex-column gap-2 ms-3 w-75">
     <div>
       <img class="logo" src="/logo.png" />
     </div>
     <div v-for="link in links">
-      <button @click="navigate(link.path)" :class="['btn', 'w-75', 'btn-lg', checkActive(link.path)]">{{
+      <button @click="navigate(link.path)" :class="['btn', 'w-100', 'btn-lg', checkActive(link.path)]">{{
         link.name
       }}</button>
     </div>
+    <LoginUserCard />
   </section>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import LoginUserCard from './LoginUserCard.vue';
 
 const router = useRouter()
 const links = [

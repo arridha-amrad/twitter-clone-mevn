@@ -15,7 +15,9 @@
         </div>
       </div>
     </div>
-    <CreateCommentFeature @closeCurrModal="closeModal" :postId="post.id" />
+    <div>
+      <CreateCommentFeature @closeCurrModal="closeModal" :postId="post.id" />
+    </div>
   </Modal>
 </template>
 
