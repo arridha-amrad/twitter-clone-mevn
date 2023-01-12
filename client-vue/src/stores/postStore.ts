@@ -1,6 +1,5 @@
 import axiosInstance from "@/utils/axiosInterceptor";
 import { defineStore } from "pinia";
-import { useRouter } from "vue-router";
 import {
   CreateCommentDTO,
   IPostWithParents,
@@ -72,8 +71,12 @@ const postStore = defineStore("post", {
     },
     async getPosts() {
       try {
-        const { data } = await axiosInstance.get("/posts");
-        this.posts = data.posts;
+        const { data } = await axiosInstance.get(
+          `/posts?limit=${7}&skip=${this.posts.length}`
+        );
+        const result = data.posts as IPostWithParentsAndChildren[];
+        const oldPosts = this.posts;
+        this.posts = [...oldPosts, ...result];
       } catch (err: any) {
         throw err.response;
       }

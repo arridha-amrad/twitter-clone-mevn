@@ -1,12 +1,18 @@
 <template>
-  <PostCard class="mt-4" v-for="post in store.posts" :post="post" :key="post.id" />
+  <ul>
+    <li v-for="post in store.posts">
+      <PostCard class="mt-4" :post="post" :key="post.id" />
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
 import PostCard from '@/components/PostCard.vue';
 import postStore from '@/stores/postStore';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+
 const store = postStore()
+
 onMounted(async () => {
   try {
     await store.getPosts()

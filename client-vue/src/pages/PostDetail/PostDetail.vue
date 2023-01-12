@@ -36,7 +36,7 @@ import { useRouter } from 'vue-router';
 import Sidebar from '@/components/Sidebar.vue';
 import SearchInput from '@/components/SearchInput.vue';
 import postStore from '@/stores/postStore';
-import { computed, onMounted, provide, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, provide, ref, watch } from 'vue';
 import Loading from '@/components/Loading.vue';
 import SimplePostCard from '@/components/SimplePostCard.vue';
 import LikePost from '@/features/LikePost.vue';
@@ -44,6 +44,10 @@ import Comments from './Comments.vue';
 import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
 
 provide('isComment', false)
+
+onUnmounted(() => {
+  store.posts = []
+})
 
 const store = postStore()
 const router = useRouter()

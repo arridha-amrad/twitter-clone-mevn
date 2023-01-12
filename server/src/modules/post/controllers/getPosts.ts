@@ -5,9 +5,12 @@ import { IPostWithParents } from "../post.types";
 import { getPostParents } from "../utils/getPostParents";
 
 const getPosts = async (req: Request, res: Response) => {
+  const { limit = "0", skip = "0" } = req.query;
   try {
     const userId = req.app.locals.userId;
     const posts = await prisma.post.findMany({
+      take: parseInt(limit as string),
+      skip: parseInt(skip as string),
       orderBy: {
         createdAt: "desc",
       },
