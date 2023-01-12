@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import postStore from '@/stores/postStore';
 import { showToast } from '@/utils/toastHandler';
-import { ref, } from 'vue';
+import { inject, ref, } from 'vue';
 import { useRouter } from 'vue-router';
 
 const emitName = 'closeCurrModal'
@@ -28,6 +28,8 @@ const router = useRouter()
 
 const isPostDetailPage = router.currentRoute.value.name === "PostDetail";
 
+const isComment = ref(inject('isComment') as boolean)
+
 const submit = async () => {
   const b = body.value
   if (!b) return
@@ -36,7 +38,7 @@ const submit = async () => {
     await store.createComment({
       body: b,
       postId: props.postId
-    }, isPostDetailPage)
+    }, isPostDetailPage, isComment.value)
     emits('closeCurrModal')
     showToast('Comment added successfully')
     body.value = ""

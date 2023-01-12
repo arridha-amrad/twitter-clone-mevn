@@ -45,8 +45,8 @@ const submit = async () => {
     username.value = ""
     email.value = ""
     password.value = ""
-  } catch (err) {
-    alertMessage.value = "Registration failure"
+  } catch (err: any) {
+    alertMessage.value = err.data.message
     isAlertSuccess.value = false
   } finally {
     isLoading.value = false

@@ -36,7 +36,6 @@ const login = async (req: Request, res: Response) => {
     return res.status(200).json({ token: bearerAccToken, user: rest });
   } catch (error) {
     console.log("error : ", error);
-
     return res.sendStatus(500);
   }
 };

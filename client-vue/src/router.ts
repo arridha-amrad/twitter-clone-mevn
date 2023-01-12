@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/posts/:id",
-    component: lazyLoad("PostDetail"),
+    component: () => import("./pages/PostDetail/PostDetail.vue"),
     name: "PostDetail",
     meta: {
       protected: true,

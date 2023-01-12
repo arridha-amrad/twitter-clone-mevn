@@ -16,7 +16,13 @@ const register = async (req: Request, res: Response) => {
     return res
       .status(200)
       .json({ message: "Congratulations! Registration successful" });
-  } catch (error) {
+  } catch (err: any) {
+    if ((err?.meta?.target as string[]).includes("username")) {
+      return res.status(400).json({ message: "username has been registered" });
+    }
+    if ((err?.meta?.target as string[]).includes("email")) {
+      return res.status(400).json({ message: "email has been registered" });
+    }
     return res.sendStatus(500);
   }
 };

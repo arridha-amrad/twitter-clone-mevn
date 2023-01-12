@@ -7,4 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "./style.css";
 
-createApp(App).use(createPinia()).use(router).mount("#app");
+createApp(App)
+  .provide("isComment", false)
+  .use(createPinia())
+  .use(router)
+  .mount("#app");

@@ -13,16 +13,14 @@
               <SimplePostCard :post="postDetail!" />
               <div class="d-flex p-2 border border-top-0 d-flex justify-content-around">
                 <like-post :post="postDetail!" />
-                <button @click="inputRef?.commentInput?.focus()"
-                  class="btn btn-outline-success btn-sm">Comments</button>
+                <button @click="inputRef?.commentInput?.focus()" class="btn btn-outline-success btn-sm">{{
+                  postDetail._count.children
+                }} Comments</button>
               </div>
               <div class="border border-top-0 p-2">
                 <CreateCommentFeature ref="inputRef" :is-detail-page="true" :post-id="postDetail!.id" />
               </div>
-              <h3 class="my-3 fw-bold">Comments</h3>
-              <div v-for="post in postDetail!.children">
-                <PostCard :post="post" />
-              </div>
+              <Comments :comments="comments" />
             </div>
           </div>
         </div>
@@ -38,12 +36,14 @@ import { useRouter } from 'vue-router';
 import Sidebar from '@/components/Sidebar.vue';
 import SearchInput from '@/components/SearchInput.vue';
 import postStore from '@/stores/postStore';
-import PostCard from '@/components/PostCard.vue';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, provide, ref, watch } from 'vue';
 import Loading from '@/components/Loading.vue';
 import SimplePostCard from '@/components/SimplePostCard.vue';
 import LikePost from '@/features/LikePost.vue';
+import Comments from './Comments.vue';
 import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
+
+provide('isComment', false)
 
 const store = postStore()
 const router = useRouter()
@@ -51,14 +51,15 @@ const inputRef = ref<InstanceType<typeof CreateCommentFeature> | null>(null)
 const isLoading = ref(true)
 const postId = computed(() => router.currentRoute.value.params.id as string)
 const postDetail = computed(() => store.posts[0])
+const comments = computed(() => store.comments)
 
 const findPost = async () => {
   const post = store.posts.find((post) => post.id === postId.value)
   try {
     if (post) {
       store.resetPost()
-      const children = await store.getChildren(postId.value)
-      store.setPost({ ...post, children })
+      store.setPost(post)
+      await store.getChildren(postId.value)
     } else {
       await store.getOnePost(postId.value)
     }

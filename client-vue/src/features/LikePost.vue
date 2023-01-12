@@ -6,12 +6,13 @@
 <script setup lang="ts">
 import { IPostWithParents } from '@/stores/types/post.types';
 import postStore from '@/stores/postStore';
-import { computed } from 'vue';
+import { computed, inject, ref } from 'vue';
 const props = defineProps<{ post: IPostWithParents }>()
 const store = postStore()
+const isComment = ref(inject("isComment") as boolean)
 const like = async () => {
   try {
-    await store.likePost(props.post.id)
+    await store.likePost(props.post.id, isComment.value)
   } catch (err) {
   }
 }

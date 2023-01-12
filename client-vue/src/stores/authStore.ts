@@ -25,8 +25,8 @@ const authStore = defineStore("auth", {
       try {
         const { data } = await axiosInstance.post("/user/register", body);
         return data;
-      } catch (err) {
-        console.log(err);
+      } catch (err: any) {
+        throw err.response;
       }
     },
     async login(body: LoginDTO) {

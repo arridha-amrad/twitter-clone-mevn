@@ -27,7 +27,7 @@ import { useRouter } from "vue-router";
 import LikePost from "@/features/LikePost.vue";
 import CommentButton from "./CommentButton.vue";
 const props = defineProps<{
-  post: IPostWithParents
+  post: IPostWithParents,
 }>()
 const date = computed(() => timeSetter(props.post.createdAt.toString()))
 const avatar = computed(() => {
