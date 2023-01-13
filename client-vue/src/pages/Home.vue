@@ -1,15 +1,15 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-lg-3 col-sm-4 vh-100 position-sticky top-0 bottom-0 start-0 end-0">
+      <div class="col-lg-3 col-md-5 d-md-block d-none vh-100 position-sticky top-0 bottom-0 start-0 end-0">
         <Sidebar />
       </div>
-      <div class="col-lg-5 col-sm-8 p-3">
+      <div class="col-lg-5 col-md-7 col-sm-12 p-3">
         <CreatePostFeature />
         <LoadPostsFeature />
         <p v-show="isLoading">fetching more posts...</p>
       </div>
-      <div class="col-lg-4 d-sm-none p-3">
+      <div class="col-lg-4 p-3">
         <SearchInput />
       </div>
     </div>

@@ -1,8 +1,8 @@
 <template>
-  <button @click="openModal" type="button" class="btn btn-outline-success btn-sm">
+  <button @click="isShow = true" type="button" class="btn btn-outline-success btn-sm">
     {{ post._count.children }} Comments
   </button>
-  <Modal :modal-id="modalId">
+  <Modal :is-show="isShow" :close-modal="closeModal">
     <div class="card border-0 w-100 mb-3 p-0" role="button">
       <div class="card-body d-flex gap-3 align-items-start">
         <img class="avatar rounded-circle border" :src="avatar" alt="avatar">
@@ -22,12 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import Modal from './Modal.vue';
 import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
-import { Modal as Mdl } from "bootstrap"
 import { IPostWithParents } from '@/stores/types/post.types';
 import timeSetter from '@/utils/timeSetter';
+
+const isShow = ref(false)
+const closeModal = () => isShow.value = false
 
 const props = defineProps<{ post: IPostWithParents }>()
 const avatar = computed(() => {
@@ -35,22 +37,5 @@ const avatar = computed(() => {
   if (url === "default") return "/default.png"
   return url
 })
-const modalId = computed(() => `modal-${props.post.id}`)
 const date = computed(() => timeSetter(props.post.createdAt.toString()))
-
-const mm = ref<HTMLElement | null>(null)
-const mdl = ref<Mdl | null>(null)
-
-onMounted(() => {
-  mm.value = document.getElementById(modalId.value)
-  mdl.value = new Mdl(mm.value!)
-})
-
-const closeModal = () => {
-  mdl.value?.hide()
-}
-const openModal = () => {
-  mdl.value?.show()
-}
-
 </script>

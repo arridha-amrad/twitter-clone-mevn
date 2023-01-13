@@ -18,7 +18,7 @@
         </small>
         <p class="card-text">{{ post.body }}</p>
         <div @click.stop="" id="post-content-action" class="d-flex gap-2 align-items-center">
-          <LikePost :post="post" />
+          <LikePostButton :post="post" />
           <CommentButton :post="post" />
         </div>
       </div>
@@ -31,7 +31,7 @@ import timeSetter from '@/utils/timeSetter';
 import { computed } from 'vue';
 import { IPostWithParents } from "@/stores/types/post.types"
 import { useRouter } from "vue-router";
-import LikePost from "@/features/LikePost.vue";
+import LikePostButton from "@/features/LikePostFeature.vue";
 import CommentButton from "./CommentButton.vue";
 
 const parents = computed(() => props.post.parents ?? [])

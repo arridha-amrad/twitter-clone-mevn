@@ -1,9 +1,7 @@
 <template>
-  <ul>
-    <li v-for="post in store.posts">
-      <PostCard class="mt-4" :post="post" :key="post.id" />
-    </li>
-  </ul>
+
+  <PostCard v-for="post in store.posts" class="mt-4" :post="post" :key="post.id" />
+
 </template>
 
 <script setup lang="ts">

@@ -1,20 +1,45 @@
 <template>
-  <!-- Modal -->
-  <div class="modal fade" :id="modalId" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <slot></slot>
-        </div>
+  <teleport to="body">
+    <div @click="closeModal" v-if="isShow" class="dwa-modal">
+      <div @click.stop="" class="dwa-modal__body">
+        <slot></slot>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script setup lang="ts">
-defineProps<{ modalId: string }>()
+import { ref, watch } from 'vue';
+
+const props = defineProps<{ isShow: boolean, closeModal: VoidFunction }>()
+const isModalOpen = ref(props.isShow)
+watch(isModalOpen, (val) => {
+  if (val) {
+    document.body.style.overflow = "hidden"
+  }
+})
 </script>
+
+
+<style scoped>
+.dwa-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100vh;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dwa-modal__body {
+  min-width: 500px;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.7rem;
+}
+</style>

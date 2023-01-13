@@ -40,15 +40,14 @@ const postStore = defineStore("post", {
           "/posts/create-comment",
           body
         );
-        console.log("isComment : ", isComment);
-
         if (isFromDetailPage) {
           if (isComment) {
             const comment = this.comments.find(
               (post) => post.id === body.postId
             );
-            if (!comment) return;
-            comment._count.children++;
+            if (comment) {
+              comment._count.children++;
+            }
           } else {
             this.comments.splice(0, 0, data.comment);
             this.posts[0]._count.children++;
@@ -85,22 +84,12 @@ const postStore = defineStore("post", {
         throw err.response;
       }
     },
-    async likePost(postId: string, isComment = false) {
+    async likePost(postId: string) {
       try {
         const { data } = await axiosInstance.post("/posts/like-post", {
           postId,
         });
-        const post = isComment
-          ? this.comments.find((post) => post.id === postId)
-          : this.posts.find((post) => post.id === postId);
-        if (!post) return;
-        post.isLiked = !post.isLiked;
-        if (data.message === "like") {
-          post._count.likes++;
-        } else {
-          post._count.likes--;
-        }
-        return data;
+        return data.message === "like";
       } catch (err: any) {
         throw err.response;
       }

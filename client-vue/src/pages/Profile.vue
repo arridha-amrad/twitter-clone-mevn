@@ -19,4 +19,5 @@
 <script setup lang="ts">
 import Sidebar from "@/components/Sidebar.vue"
 import SearchInput from "@/components/SearchInput.vue"
+import LogoutFeature from "@/features/LogoutFeature.vue";
 </script>

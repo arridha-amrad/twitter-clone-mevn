@@ -2,7 +2,7 @@
   <form @submit.prevent="submit" class="d-flex flex-column gap-2">
     <div :class="isDetailPage ? 'mb-0' : 'mb-3'">
       <textarea ref="commentInput" v-model="body" style="resize: none" placeholder="Write your reply..."
-        :class="['form-control', isDetailPage ? 'border-0 bg-body-tertiary' : '']" rows="3"></textarea>
+        :class="['form-control', isDetailPage ? 'border-0' : '']" rows="3"></textarea>
     </div>
     <button :disabled="isLoading" type="submit"
       :class="['btn', 'btn-primary', 'align-self-end', isDetailPage ? 'btn-sm' : '']">Create
@@ -35,15 +35,16 @@ const submit = async () => {
   if (!b) return
   try {
     isLoading.value = true
+    emits('closeCurrModal')
     await store.createComment({
       body: b,
       postId: props.postId
     }, isPostDetailPage, isComment.value)
-    emits('closeCurrModal')
     showToast('Comment added successfully')
     body.value = ""
   } catch (err) {
     console.log("err : ", err);
+    showToast('Failed creating comment')
   } finally {
     isLoading.value = false
   }

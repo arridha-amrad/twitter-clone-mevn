@@ -36,10 +36,10 @@ import { useRouter } from 'vue-router';
 import Sidebar from '@/components/Sidebar.vue';
 import SearchInput from '@/components/SearchInput.vue';
 import postStore from '@/stores/postStore';
-import { computed, onMounted, onUnmounted, provide, ref, watch } from 'vue';
+import { computed, onUnmounted, provide, ref, watchEffect } from 'vue';
 import Loading from '@/components/Loading.vue';
 import SimplePostCard from '@/components/SimplePostCard.vue';
-import LikePost from '@/features/LikePost.vue';
+import LikePost from '@/features/LikePostFeature.vue';
 import Comments from './Comments.vue';
 import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
 
@@ -58,15 +58,8 @@ const postDetail = computed(() => store.posts[0])
 const comments = computed(() => store.comments)
 
 const findPost = async () => {
-  const post = store.posts.find((post) => post.id === postId.value)
   try {
-    if (post) {
-      store.posts = []
-      store.posts.push(post)
-      await store.getChildren(postId.value)
-    } else {
-      await store.getOnePost(postId.value)
-    }
+    await store.getOnePost(postId.value)
     setTimeout(() => isLoading.value = false, 300)
   } catch (err) {
     console.log("err : ", err);
@@ -74,12 +67,8 @@ const findPost = async () => {
   }
 }
 
-watch(postId, async (val) => {
-  isLoading.value = true
+watchEffect(async () => {
   await findPost()
 })
 
-onMounted(async () => {
-  await findPost()
-})
 </script>
