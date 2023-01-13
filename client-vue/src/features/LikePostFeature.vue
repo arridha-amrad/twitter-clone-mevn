@@ -1,6 +1,5 @@
 <template>
   <button @click="like" :class="['btn', 'btn-sm', likeBtn]">{{ likeObj.totalLikes }} Like</button>
-
 </template>
 
 <script setup lang="ts">

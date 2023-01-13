@@ -1,11 +1,11 @@
 <template>
   <main>
-    <div class="container ">
+    <div class="container-lg ">
       <div class="row">
-        <div class="col-lg-3 vh-100 position-sticky top-0 bottom-0 start-0 end-0">
+        <LayoutLeft>
           <Sidebar />
-        </div>
-        <div class="col-lg-5 p-3">
+        </LayoutLeft>
+        <LayoutCenter>
           <Loading v-if="isLoading" />
           <div v-else>
             <div v-if="postDetail === null">Post not found</div>
@@ -23,10 +23,10 @@
               <Comments :comments="comments" />
             </div>
           </div>
-        </div>
-        <div class="col-lg-4 p-3">
+        </LayoutCenter>
+        <LayoutRight>
           <SearchInput />
-        </div>
+        </LayoutRight>
       </div>
     </div>
   </main>
@@ -42,6 +42,9 @@ import SimplePostCard from '@/components/SimplePostCard.vue';
 import LikePost from '@/features/LikePostFeature.vue';
 import Comments from './Comments.vue';
 import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
+import LayoutLeft from '@/components/LayoutLeft.vue';
+import LayoutRight from '@/components/LayoutRight.vue';
+import LayoutCenter from '@/components/LayoutCenter.vue';
 
 provide('isComment', false)
 

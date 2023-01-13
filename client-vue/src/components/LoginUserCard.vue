@@ -15,5 +15,4 @@ import { storeToRefs } from 'pinia';
 
 const { user } = storeToRefs(authStore())
 
-
 </script>

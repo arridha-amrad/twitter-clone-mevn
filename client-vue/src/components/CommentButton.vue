@@ -1,5 +1,5 @@
 <template>
-  <button @click="isShow = true" type="button" class="btn btn-outline-success btn-sm">
+  <button @click="openModal" type="button" class="btn btn-outline-success btn-sm">
     {{ post._count.children }} Comments
   </button>
   <Modal :is-show="isShow" :close-modal="closeModal">
@@ -29,7 +29,15 @@ import { IPostWithParents } from '@/stores/types/post.types';
 import timeSetter from '@/utils/timeSetter';
 
 const isShow = ref(false)
-const closeModal = () => isShow.value = false
+
+const openModal = () => {
+  isShow.value = true
+  document.body.style.overflowY = "hidden"
+}
+const closeModal = () => {
+  isShow.value = false
+  document.body.style.overflowY = "auto"
+}
 
 const props = defineProps<{ post: IPostWithParents }>()
 const avatar = computed(() => {

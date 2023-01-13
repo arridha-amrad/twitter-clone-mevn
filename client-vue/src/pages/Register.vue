@@ -2,7 +2,7 @@
   <main>
     <div class="container">
       <div class="row vh-100 d-flex justify-content-center align-items-center">
-        <div class="col-lg-3 rounded-4 py-4 px-3">
+        <div class="col-12 col-sm-10 col-md-7 col-lg-4 rounded-4 py-4 px-3">
           <h1 class="mb-3 fw-bold">Register</h1>
           <p v-if="isSuccess" class="text-success text-center">
             Congratulations
@@ -21,7 +21,6 @@
 <script setup lang="ts">
 import RegisterFeature from "@/features/RegisterFeature.vue";
 import { ref } from "vue";
-
 const isSuccess = ref(false);
 </script>
 

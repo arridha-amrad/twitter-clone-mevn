@@ -49,7 +49,8 @@ const postStore = defineStore("post", {
               comment._count.children++;
             }
           } else {
-            this.comments.splice(0, 0, data.comment);
+            const { parents, ...rest } = data.comment;
+            this.comments.splice(0, 0, rest);
             this.posts[0]._count.children++;
           }
         } else {

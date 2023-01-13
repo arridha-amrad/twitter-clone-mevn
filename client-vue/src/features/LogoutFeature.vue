@@ -1,8 +1,8 @@
 <template>
-  <button @click="isShow = true" class="btn btn-warning">Logout</button>
-  <Modal :is-show="isShow" :close-modal="close">
+  <button @click="showModal" data-bs-dismiss="offcanvas" class="btn btn-warning">Logout</button>
+  <Modal :is-small-size="true" :is-show="isShow" :close-modal="close">
     <div class="d-flex justify-content-center align-items-center flex-column gap-2">
-      <h2>Are you sure to logout?</h2>
+      <h5>Are you sure to logout?</h5>
       <button @click="loggingOut" class="btn btn-warning">Logout</button>
       <button @click="close" class="btn btn-secondary">Cancel</button>
     </div>
@@ -18,6 +18,10 @@ import { ref } from 'vue';
 
 const isShow = ref(false)
 
+const showModal = () => {
+  isShow.value = true
+}
+
 const close = () => {
   isShow.value = false
 }
@@ -29,6 +33,7 @@ const router = useRouter()
 const loggingOut = async () => {
   try {
     await uStore.logout()
+    close()
     pStore.posts = []
     router.replace("/login")
   } catch (err) {

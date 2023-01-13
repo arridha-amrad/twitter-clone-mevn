@@ -1,17 +1,17 @@
 <template>
-  <div class="container">
+  <div class="container-lg">
     <div class="row">
-      <div class="col-lg-3 col-md-5 d-md-block d-none vh-100 position-sticky top-0 bottom-0 start-0 end-0">
+      <LayoutLeft>
         <Sidebar />
-      </div>
-      <div class="col-lg-5 col-md-7 col-sm-12 p-3">
+      </LayoutLeft>
+      <LayoutCenter>
         <CreatePostFeature />
         <LoadPostsFeature />
         <p v-show="isLoading">fetching more posts...</p>
-      </div>
-      <div class="col-lg-4 p-3">
+      </LayoutCenter>
+      <LayoutRight>
         <SearchInput />
-      </div>
+      </LayoutRight>
     </div>
   </div>
   <div v-show="isShow" class="position-fixed bottom-0 end-0 translate-middle-x">
@@ -27,6 +27,9 @@ import LoadPostsFeature from '@/features/LoadPostsFeature.vue';
 import postStore from "@/stores/postStore";
 import { useInfiniteScroll } from "@vueuse/core";
 import { ref } from "vue";
+import LayoutLeft from "@/components/LayoutLeft.vue";
+import LayoutCenter from "@/components/LayoutCenter.vue";
+import LayoutRight from "@/components/LayoutRight.vue";
 
 const isShow = ref(false)
 
