@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit">
+  <form ref="postFormRef" @submit.prevent="submit">
     <div class="mb-3">
       <textarea v-model="body" style="resize: none" placeholder="Write your tweet..." class="form-control"
         rows="3"></textarea>
@@ -18,6 +18,8 @@ const isLoading = ref(false)
 const isShow = ref(false)
 const body = ref("")
 
+const postFormRef = ref<HTMLFormElement>()
+defineExpose({ postFormRef })
 
 const submit = async () => {
   const b = body.value

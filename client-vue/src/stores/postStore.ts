@@ -12,6 +12,17 @@ const postStore = defineStore("post", {
     comments: [] as IPostWithParents[],
   }),
   actions: {
+    async deletePost(postId: string) {
+      try {
+        await axiosInstance.delete(`/posts/delete/${postId}`);
+        this.posts = this.posts.filter((post) => post.id !== postId);
+        this.comments = this.comments.filter(
+          (comment) => comment.id !== postId
+        );
+      } catch (err: any) {
+        throw err.response;
+      }
+    },
     async getChildren(postId: string) {
       try {
         const { data } = await axiosInstance.get(`/posts/children/${postId}`);

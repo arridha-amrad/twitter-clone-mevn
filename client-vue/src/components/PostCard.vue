@@ -6,7 +6,8 @@
         <div class="d-flex align-items-center gap-2 fs-6">
           <div class="fw-bold ">{{ post.author.username }}</div>
           <span class="text-secondary">&bull;</span>
-          <div class="text-black-50 fs-6">{{ date }}</div>
+          <div class="text-black-50 fs-6 flex-grow-1">{{ date }}</div>
+          <PostMenu v-show="isMyPost" :post-id="post.id" />
         </div>
         <small v-if="parents.length > 0">
           <ul class="d-flex flex-wrap gap-1 text-primary">
@@ -33,7 +34,12 @@ import { IPostWithParents } from "@/stores/types/post.types"
 import { useRouter } from "vue-router";
 import LikePostButton from "@/features/LikePostFeature.vue";
 import CommentButton from "./CommentButton.vue";
+import PostMenu from './PostMenu.vue';
+import authStore from '@/stores/authStore';
 
+const userStore = authStore()
+
+const isMyPost = computed(() => userStore.user?.id === props.post.author.id)
 const parents = computed(() => props.post.parents ?? [])
 const users = computed(() => new Set(parents.value.map((user) => user.author.username)))
 

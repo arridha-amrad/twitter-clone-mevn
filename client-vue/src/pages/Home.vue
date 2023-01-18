@@ -5,7 +5,7 @@
         <Sidebar />
       </LayoutLeft>
       <LayoutCenter>
-        <CreatePostFeature />
+        <CreatePostFeature ref="postCreatorRef" />
         <LoadPostsFeature />
         <p v-show="isLoading">fetching more posts...</p>
       </LayoutCenter>
@@ -26,12 +26,25 @@ import CreatePostFeature from "@/features/CreatePostFeature.vue"
 import LoadPostsFeature from '@/features/LoadPostsFeature.vue';
 import postStore from "@/stores/postStore";
 import { useInfiniteScroll } from "@vueuse/core";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import LayoutLeft from "@/components/LayoutLeft.vue";
 import LayoutCenter from "@/components/LayoutCenter.vue";
 import LayoutRight from "@/components/LayoutRight.vue";
 
 const isShow = ref(false)
+const postCreatorRef = ref<InstanceType<typeof CreatePostFeature> | null>(null)
+
+onMounted(() => {
+  const observer = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) {
+      isShow.value = true
+    } else {
+      isShow.value = false
+    }
+  })
+  if (!postCreatorRef.value) return
+  if (postCreatorRef.value.postFormRef) observer.observe(postCreatorRef.value.postFormRef)
+})
 
 const goUp = () => {
   window.scrollTo({

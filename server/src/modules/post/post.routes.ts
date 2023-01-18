@@ -6,6 +6,7 @@ import getPosts from "./controllers/getPosts";
 import likePost from "./controllers/likePost";
 import getOnePost from "./controllers/getOnePost";
 import getPostChildren from "./controllers/getPostChildren";
+import deletePost from "./controllers/deletePost";
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.post("/create-comment", verifyAuthToken, createComment);
 router.get("/detail/:postId", verifyAuthToken, getOnePost);
 router.get("/children/:postId", verifyAuthToken, getPostChildren);
 router.get("/", verifyAuthToken, getPosts);
+router.delete("/delete/:postId", verifyAuthToken, deletePost);
 
 export default router;

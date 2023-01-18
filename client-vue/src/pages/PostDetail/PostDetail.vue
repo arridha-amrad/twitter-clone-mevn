@@ -32,19 +32,19 @@
   </main>
 </template>
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import Sidebar from '@/components/Sidebar.vue';
-import SearchInput from '@/components/SearchInput.vue';
-import postStore from '@/stores/postStore';
-import { computed, onUnmounted, provide, ref, watchEffect } from 'vue';
-import Loading from '@/components/Loading.vue';
-import SimplePostCard from '@/components/SimplePostCard.vue';
-import LikePost from '@/features/LikePostFeature.vue';
-import Comments from './Comments.vue';
-import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
+import LayoutCenter from '@/components/LayoutCenter.vue';
 import LayoutLeft from '@/components/LayoutLeft.vue';
 import LayoutRight from '@/components/LayoutRight.vue';
-import LayoutCenter from '@/components/LayoutCenter.vue';
+import Loading from '@/components/Loading.vue';
+import SearchInput from '@/components/SearchInput.vue';
+import Sidebar from '@/components/Sidebar.vue';
+import SimplePostCard from '@/components/SimplePostCard.vue';
+import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
+import LikePost from '@/features/LikePostFeature.vue';
+import postStore from '@/stores/postStore';
+import { computed, onUnmounted, provide, ref, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
+import Comments from './Comments.vue';
 
 provide('isComment', false)
 
