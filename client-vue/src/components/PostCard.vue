@@ -1,16 +1,16 @@
 <template>
-  <div @click="navigate(post.id)" class="card border-0 w-100 mb-3" role="button">
-    <div class="card-body d-flex gap-3 align-items-start">
-      <img class="avatar rounded-circle border" :src="avatar" alt="avatar">
-      <div id="post-content" class="flex-fill">
-        <div class="d-flex align-items-center gap-2 fs-6">
-          <div class="fw-bold ">{{ post.author.username }}</div>
+  <div @click="navigate(post.id)" class="bg-white px-4 py-3 rounded-lg border-0 w-full" role="button">
+    <div class="flex gap-4">
+      <img class="w-14 h-14 rounded-full border-2" :src="avatar" alt="avatar">
+      <div id="post-content" class="flex-1 space-y-2">
+        <div class="flex justify-start gap-2 items-center">
+          <h1 class="font-bold text-sm md:text-base">{{ post.author.username }}</h1>
           <span class="text-secondary">&bull;</span>
-          <div class="text-black-50 fs-6 flex-grow-1">{{ date }}</div>
+          <div class="flex-grow text-sm">{{ date }}</div>
           <PostMenu v-show="isMyPost" :post-id="post.id" />
         </div>
         <small v-if="parents.length > 0">
-          <ul class="d-flex flex-wrap gap-1 text-primary">
+          <ul class="flex flex-wrap text-sm text-blue-500">
             Replying to
             <li v-for="user in users">
               @{{ user }}

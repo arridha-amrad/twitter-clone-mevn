@@ -1,11 +1,12 @@
 <template>
-  <form @submit.prevent="submit" class="d-flex flex-column gap-1">
+  <form @submit.prevent="submit" class="flex flex-col gap-2">
     <div v-if="alertMessage" :class="['alert', alertType]" role="alert">{{ alertMessage }}</div>
     <Input ref="input" type="text" label-text="Email or Username" id="emailOrUsername" v-model="identity" />
     <Input :type="toggleType" label-text="Password" id="password" v-model="password" />
     <CheckBox v-model="isShowPassword" label-text="Show Password" />
-    <button :disabled="isLoading" type="submit" class="btn btn-primary btn-lg mt-3">
-      Login
+    <button :disabled="isLoading" type="submit" class="btn btn-primary">
+      <Spinner v-if="isLoading">loading...</Spinner>
+      <span v-else>Register</span>
     </button>
   </form>
 </template>
@@ -16,6 +17,7 @@ import Input from "@/components/Input.vue";
 import CheckBox from "@/components/CheckBox.vue";
 import authStore from "@/stores/authStore";
 import { useRouter } from "vue-router";
+import Spinner from "@/components/Spinner.vue";
 const router = useRouter()
 const identity = ref("");
 const password = ref("");

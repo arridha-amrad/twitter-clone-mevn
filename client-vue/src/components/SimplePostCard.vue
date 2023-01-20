@@ -1,5 +1,5 @@
 <template>
-  <div class="card border w-100 rounded-bottom-0">
+  <div class="bg-white px-4 py-3  rounded-t-lg border w-full rounded-b-none">
     <div class="card-body d-flex gap-3 align-items-start">
       <img class="avatar rounded-circle border" :src="avatar" alt="avatar">
       <div id="post-content" class="flex-fill">

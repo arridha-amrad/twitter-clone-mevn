@@ -1,8 +1,8 @@
 <template>
   <form @submit.prevent="submit" class="d-flex flex-column gap-2">
     <div :class="isDetailPage ? 'mb-0' : 'mb-3'">
-      <textarea ref="commentInput" v-model="body" style="resize: none" placeholder="Write your reply..."
-        :class="['form-control', isDetailPage ? 'border-0' : '']" rows="3"></textarea>
+      <textarea ref="commentInput" v-model="body" placeholder="Write your reply..."
+        :class="['textarea', isDetailPage ? 'border-0' : '']" rows="3"></textarea>
     </div>
     <button :disabled="isLoading" type="submit"
       :class="['btn', 'btn-primary', 'align-self-end', isDetailPage ? 'btn-sm' : '']">Create

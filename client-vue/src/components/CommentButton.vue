@@ -1,5 +1,5 @@
 <template>
-  <button @click="openModal" type="button" class="btn btn-outline-success btn-sm">
+  <button @click="openModal" type="button" class="btn btn-outline-comment btn-sm">
     {{ post._count.children }} Comments
   </button>
   <Modal :is-show="isShow" :close-modal="closeModal">

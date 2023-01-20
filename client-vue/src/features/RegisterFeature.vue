@@ -1,12 +1,13 @@
 <template>
-  <form @submit.prevent="submit" class="d-flex flex-column gap-1">
+  <form @submit.prevent="submit" class="flex flex-col gap-2">
     <div v-if="alertMessage" :class="['alert', alertType]" role="alert">{{ alertMessage }}</div>
     <Input type="text" label-text="Email Address" id="email" v-model="email" />
     <Input type="text" label-text="Username" id="username" v-model="username" />
     <Input :type="toggleType" label-text="Password" id="password" v-model="password" />
     <CheckBox v-model="isShowPassword" label-text="Show Password" />
     <button :disabled="isLoading" type="submit" class="btn btn-primary btn-lg mt-3">
-      Register
+      <Spinner v-if="isLoading">loading...</Spinner>
+      <span v-else>Register</span>
     </button>
   </form>
 </template>
@@ -16,6 +17,7 @@ import { computed, ref } from "vue";
 import Input from "@/components/Input.vue";
 import CheckBox from "@/components/CheckBox.vue";
 import authStore from "@/stores/authStore";
+import Spinner from "@/components/Spinner.vue";
 const store = authStore()
 const username = ref("");
 const email = ref("");

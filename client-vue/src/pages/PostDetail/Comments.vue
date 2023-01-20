@@ -1,5 +1,5 @@
 <template>
-  <h3 class="my-3 fw-bold">Comments</h3>
+  <h1 class="my-4 text-2xl font-bold">Comments</h1>
   <div v-for="post in comments">
     <PostCard :post="post" :key="post.id" />
   </div>

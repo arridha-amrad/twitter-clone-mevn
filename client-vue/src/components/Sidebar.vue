@@ -6,12 +6,12 @@
 </style>
 
 <template>
-  <section class="d-flex flex-column gap-2 ms-3 w-75">
+  <section class="flex flex-col gap-4 pr-10">
     <div>
-      <img class="logo" src="/logo.png" />
+      <img class="h-16 w-16" src="/logo.png" />
     </div>
     <div v-for="link in links">
-      <button @click="navigate(link.path)" :class="['btn', 'w-100', 'btn-lg', checkActive(link.path)]">{{
+      <button @click="navigate(link.path)" :class="['btn', 'w-full', checkActive(link.path)]">{{
         link.name
       }}</button>
     </div>

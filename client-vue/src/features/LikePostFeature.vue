@@ -23,5 +23,5 @@ const like = async () => {
   }
 }
 
-const likeBtn = computed(() => likeObj.isLiked ? "btn-danger" : "btn-outline-danger")
+const likeBtn = computed(() => likeObj.isLiked ? "btn-like" : "btn-outline-like")
 </script>

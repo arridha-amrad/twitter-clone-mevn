@@ -1,6 +1,6 @@
 <template>
   <div class="position-relative">
-    <button @click.stop="isShow = !isShow" class="btn">&bull;&bull;&bull;</button>
+    <button @click.stop="isShow = !isShow">&bull;&bull;&bull;</button>
     <ul ref="menuRef" v-show="isShow" class="position-absolute top-0 start-0 list-group mt-3">
       <li @click.stop="openModal" class="list-group-item list-group-item-action">delete</li>
     </ul>

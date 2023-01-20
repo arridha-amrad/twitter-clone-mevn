@@ -1,7 +1,7 @@
 <template>
   <main>
-    <div class="container-lg ">
-      <div class="row">
+    <div class="container mx-auto">
+      <div class="flex">
         <LayoutLeft>
           <Sidebar />
         </LayoutLeft>
@@ -13,7 +13,7 @@
               <SimplePostCard :post="postDetail!" />
               <div class="d-flex p-2 border border-top-0 d-flex justify-content-around">
                 <like-post :post="postDetail!" />
-                <button @click="inputRef?.commentInput?.focus()" class="btn btn-outline-success btn-sm">{{
+                <button @click="inputRef?.commentInput?.focus()" class="btn btn-outline-comment btn-sm">{{
                   postDetail._count.children
                 }} Comments</button>
               </div>

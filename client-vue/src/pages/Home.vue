@@ -1,6 +1,6 @@
 <template>
-  <div class="container-lg">
-    <div class="row">
+  <div class="container mx-auto">
+    <div class="flex">
       <LayoutLeft>
         <Sidebar />
       </LayoutLeft>
@@ -14,8 +14,8 @@
       </LayoutRight>
     </div>
   </div>
-  <div v-show="isShow" class="position-fixed bottom-0 end-0 translate-middle-x">
-    <button @click="goUp" class="btn btn-primary mb-3">Go Up</button>
+  <div v-show="isShow" class="fixed bottom-5 right-5">
+    <button @click="goUp" class="btn btn-primary">Go Up</button>
   </div>
 </template>
 

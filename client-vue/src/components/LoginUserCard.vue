@@ -1,10 +1,8 @@
 <template>
-  <div class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">{{ user?.username }}</h5>
-      <p class="card-text">{{ user?.id }}</p>
-      <LogoutFeature />
-    </div>
+  <div class="bg-white p-4 rounded-lg space-y-2">
+    <h1 class="font-bold text-xl">{{ user?.username }}</h1>
+    <p>{{ user?.id }}</p>
+    <LogoutFeature />
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <button @click="showModal" data-bs-dismiss="offcanvas" class="btn btn-warning">Logout</button>
+  <button @click="showModal" class="btn btn-primary btn-sm">Logout</button>
   <Modal :is-small-size="true" :is-show="isShow" :close-modal="close">
     <div class="d-flex justify-content-center align-items-center flex-column gap-2">
       <h5>Are you sure to logout?</h5>
