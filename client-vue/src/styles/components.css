@@ -3,7 +3,7 @@
     @apply rounded-lg px-4 py-2.5 text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base;
   }
   .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:bg-blue-400;
   }
   .btn-outline-primary {
     @apply border border-gray-300 text-blue-500 hover:border-blue-300 hover:bg-blue-200 focus:ring-blue-300;

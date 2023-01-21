@@ -1,19 +1,11 @@
 <template>
-  <button
-    @click.stop="openModal"
-    type="button"
-    class="btn btn-outline-comment btn-sm"
-  >
+  <button @click.stop="openModal" type="button" class="btn btn-outline-comment btn-sm">
     {{ post._count.children }} Comments
   </button>
   <Modal :is-show="isShow" :close-modal="closeModal">
-    <div class="bg-white border-0 w-full mb-6" role="button">
+    <div class="bg-white border-0 w-full mb-6">
       <div class="flex gap-3">
-        <img
-          class="h-12 w-12 rounded-full object-cover border"
-          :src="avatar"
-          alt="avatar"
-        />
+        <img class="avatar" :src="avatar" alt="avatar" />
         <div id="post-content" class="flex-fill">
           <div class="flex gap-2 items-center">
             <div class="font-bold">{{ post.author.username }}</div>

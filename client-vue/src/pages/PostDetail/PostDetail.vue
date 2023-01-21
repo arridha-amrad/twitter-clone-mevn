@@ -6,12 +6,14 @@
           <Sidebar />
         </LayoutLeft>
         <LayoutCenter>
-          <Loading v-if="isLoading" />
+          <div v-if="isLoading" class="flex items-center justify-center">
+            <Spinner />
+          </div>
           <div v-else>
-            <div v-if="postDetail === null">Post not found</div>
+            <Alert type="error" message="Post not found" v-if="postDetail === null" />
             <div v-else>
               <SimplePostCard :post="postDetail!" />
-              <div class="d-flex p-2 border border-top-0 d-flex justify-content-around">
+              <div class="flex p-2 border border-t-0 d-flex justify-around">
                 <like-post :post="postDetail!" />
                 <button @click="inputRef?.commentInput?.focus()" class="btn btn-outline-comment btn-sm">{{
                   postDetail._count.children
@@ -32,13 +34,14 @@
   </main>
 </template>
 <script setup lang="ts">
+import Alert from '@/components/Alert.vue';
 import LayoutCenter from '@/components/LayoutCenter.vue';
 import LayoutLeft from '@/components/LayoutLeft.vue';
 import LayoutRight from '@/components/LayoutRight.vue';
-import Loading from '@/components/Loading.vue';
 import SearchInput from '@/components/SearchInput.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import SimplePostCard from '@/components/SimplePostCard.vue';
+import Spinner from '@/components/Spinner.vue';
 import CreateCommentFeature from '@/features/CreateCommentFeature.vue';
 import LikePost from '@/features/LikePostFeature.vue';
 import postStore from '@/stores/postStore';

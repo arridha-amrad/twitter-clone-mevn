@@ -28,7 +28,6 @@
 <script setup lang="ts">
 import postStore from '@/stores/postStore';
 import { ref } from 'vue';
-import { showToast } from "@/utils/toastHandler"
 
 const store = postStore()
 const isLoading = ref(false)
@@ -46,7 +45,6 @@ const submit = async () => {
     await store.createPost(b)
     isShow.value = true
     body.value = ""
-    showToast("Post created successfully")
   } catch (err) {
     console.log("err : ", err)
   } finally {

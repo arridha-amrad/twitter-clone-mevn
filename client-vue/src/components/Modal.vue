@@ -9,10 +9,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue';
 
 const props = defineProps<{ isShow: boolean, closeModal: VoidFunction, isSmallSize?: boolean }>()
 const windowWidth = ref(document.body.clientWidth)
+
+watchEffect((onCleanup) => {
+  if (props.isShow) {
+    document.body.style.overflow = "hidden"
+  }
+  onCleanup(() => {
+    document.body.style.overflow = "auto"
+  })
+})
 
 const width = computed(() => !!props.isSmallSize ? "w-sm" : windowWidth.value < 500 ? "w-100 mx-3" : "w-md")
 
@@ -32,6 +41,7 @@ const handleResize = () => {
 
 <style scoped>
 .dwa-modal {
+  @apply backdrop-blur;
   position: fixed;
   top: 0;
   left: 0;

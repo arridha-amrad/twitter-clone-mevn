@@ -1,28 +1,14 @@
 <template>
   <form @submit.prevent="submit" class="flex flex-col gap-2">
-    <div
-      v-show="alert !== ''"
-      class="mb-4 rounded-lg bg-red-100 p-4 text-sm text-red-700 dark:bg-gray-800 dark:text-red-400"
-      role="alert"
-    >
+    <div v-show="alert !== ''"
+      class="mb-4 rounded-lg bg-red-100 p-4 text-sm text-red-700 dark:bg-gray-800 dark:text-red-400" role="alert">
       <p>{{ alert }}</p>
     </div>
-    <Input
-      ref="input"
-      type="text"
-      label-text="Email or Username"
-      id="emailOrUsername"
-      v-model="state.identity"
-    />
-    <Input
-      :type="toggleType"
-      label-text="Password"
-      id="password"
-      v-model="state.password"
-    />
+    <Input ref="input" type="text" label-text="Email or Username" id="emailOrUsername" v-model="state.identity" />
+    <Input :type="toggleType" label-text="Password" id="password" v-model="state.password" />
     <CheckBox v-model="isShowPassword" label-text="Show Password" />
     <button :disabled="isLoading" type="submit" class="btn btn-primary">
-      <Spinner size="sm" v-if="isLoading">loading...</Spinner>
+      <Spinner size="sm" v-if="isLoading">Loading...</Spinner>
       <span v-else>Login</span>
     </button>
   </form>
@@ -68,8 +54,8 @@ const submit = async () => {
     router.replace("/");
   } catch (err: any) {
     alert.value = err.data.message;
-  } finally {
     isLoading.value = false;
+  } finally {
   }
 };
 </script>

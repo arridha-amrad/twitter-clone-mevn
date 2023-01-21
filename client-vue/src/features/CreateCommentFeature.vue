@@ -2,17 +2,16 @@
   <form @submit.prevent="submit" class="flex flex-col gap-2">
     <div :class="isDetailPage ? 'mb-0' : 'mb-3'">
       <textarea ref="commentInput" v-model="body" placeholder="Write your reply..."
-        :class="['textarea', isDetailPage ? 'border-0' : 'border']" rows="3"></textarea>
+        :class="['textarea', isDetailPage ? 'border-0' : 'border border-gray-300']" rows="3"></textarea>
     </div>
     <button :disabled="isLoading" type="submit"
-      :class="['btn', 'btn-primary', 'align-self-end', isDetailPage ? 'btn-sm' : '']">Create
+      :class="['btn', 'btn-primary', 'self-end', isDetailPage ? 'btn-sm' : '']">Create
       Comment</button>
   </form>
 </template>
 
 <script setup lang="ts">
 import postStore from '@/stores/postStore';
-import { showToast } from '@/utils/toastHandler';
 import { inject, ref, } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -40,11 +39,9 @@ const submit = async () => {
       body: b,
       postId: props.postId
     }, isPostDetailPage, isComment.value)
-    showToast('Comment added successfully')
     body.value = ""
   } catch (err) {
     console.log("err : ", err);
-    showToast('Failed creating comment')
   } finally {
     isLoading.value = false
   }

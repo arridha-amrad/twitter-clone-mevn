@@ -1,10 +1,12 @@
 <template>
   <button @click="showModal" class="btn btn-primary btn-sm">Logout</button>
   <Modal :is-small-size="true" :is-show="isShow" :close-modal="close">
-    <div class="d-flex justify-content-center align-items-center flex-column gap-2">
-      <h5>Are you sure to logout?</h5>
-      <button @click="loggingOut" class="btn btn-warning">Logout</button>
-      <button @click="close" class="btn btn-secondary">Cancel</button>
+    <div class="flex flex-col gap-2">
+      <h1 class="font-bold text-xl">Are you sure to logout?</h1>
+      <div class="mx-auto space-x-3">
+        <button @click="loggingOut" class="btn btn-primary btn-sm">Logout</button>
+        <button @click="close" class="btn border btn-sm">Cancel</button>
+      </div>
     </div>
   </Modal>
 </template>

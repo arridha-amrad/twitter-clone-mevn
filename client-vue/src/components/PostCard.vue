@@ -1,9 +1,5 @@
 <template>
-  <article
-    @click="navigate(post.id)"
-    class="w-full rounded-lg border-0 bg-white px-4 py-3"
-    role="button"
-  >
+  <article @click="navigate(post.id)" class="w-full rounded-lg border-0 bg-white px-4 py-3" role="button">
     <div class="flex gap-4">
       <img class="avatar" :src="avatar" alt="avatar" />
       <div id="post-content" class="flex-1 space-y-2">
@@ -44,7 +40,9 @@ import authStore from "@/stores/authStore";
 const userStore = authStore();
 
 const isMyPost = computed(() => userStore.user?.id === props.post.author.id);
+
 const parents = computed(() => props.post.parents ?? []);
+
 const users = computed(
   () => new Set(parents.value.map((user) => user.author.username))
 );
