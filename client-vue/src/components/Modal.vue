@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div @click="closeModal" v-if="isShow" class="dwa-modal">
+    <div @click="closeModal" v-show="isShow" class="dwa-modal">
       <div @click.stop="" :class="['dwa-modal__body', width]">
         <slot></slot>
       </div>

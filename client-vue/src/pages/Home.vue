@@ -7,7 +7,9 @@
       <LayoutCenter>
         <CreatePostFeature ref="postCreatorRef" />
         <LoadPostsFeature />
-        <p v-show="isLoading">fetching more posts...</p>
+        <div v-show="isLoading" class="flex justify-center items-center h-14">
+          <Spinner />
+        </div>
       </LayoutCenter>
       <LayoutRight>
         <SearchInput />
@@ -20,51 +22,52 @@
 </template>
 
 <script setup lang="ts">
-import Sidebar from "@/components/Sidebar.vue"
-import SearchInput from "@/components/SearchInput.vue"
-import CreatePostFeature from "@/features/CreatePostFeature.vue"
-import LoadPostsFeature from '@/features/LoadPostsFeature.vue';
+import Sidebar from "@/components/Sidebar.vue";
+import SearchInput from "@/components/SearchInput.vue";
+import CreatePostFeature from "@/features/CreatePostFeature.vue";
+import LoadPostsFeature from "@/features/LoadPostsFeature.vue";
 import postStore from "@/stores/postStore";
 import { useInfiniteScroll } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 import LayoutLeft from "@/components/LayoutLeft.vue";
 import LayoutCenter from "@/components/LayoutCenter.vue";
 import LayoutRight from "@/components/LayoutRight.vue";
+import Spinner from "@/components/Spinner.vue";
 
-const isShow = ref(false)
-const postCreatorRef = ref<InstanceType<typeof CreatePostFeature> | null>(null)
+const isShow = ref(false);
+const postCreatorRef = ref<InstanceType<typeof CreatePostFeature> | null>(null);
 
 onMounted(() => {
-  const observer = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver((entries) => {
     if (!entries[0].isIntersecting) {
-      isShow.value = true
+      isShow.value = true;
     } else {
-      isShow.value = false
+      isShow.value = false;
     }
-  })
-  if (!postCreatorRef.value) return
-  if (postCreatorRef.value.postFormRef) observer.observe(postCreatorRef.value.postFormRef)
-})
+  });
+  if (!postCreatorRef.value) return;
+  if (postCreatorRef.value.postFormRef)
+    observer.observe(postCreatorRef.value.postFormRef);
+});
 
 const goUp = () => {
   window.scrollTo({
     top: 0,
     left: 0,
-    behavior: "smooth"
-  })
-}
+    behavior: "smooth",
+  });
+};
 
-const isLoading = ref(false)
-const store = postStore()
+const isLoading = ref(false);
+const store = postStore();
 useInfiniteScroll(document, async () => {
-  isLoading.value = true
+  isLoading.value = true;
   try {
-    await store.getPosts()
-    isShow.value = true
+    await store.getPosts();
+    isShow.value = true;
   } catch (err) {
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
-})
-
+});
 </script>

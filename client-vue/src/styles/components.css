@@ -1,26 +1,26 @@
 @layer components {
   .btn {
-    @apply text-white outline-none rounded-lg font-medium focus:ring-4 text-sm md:text-base px-4 py-2.5 transition ease-in duration-200;
+    @apply rounded-lg px-4 py-2.5 text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base;
   }
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
   }
   .btn-outline-primary {
-    @apply text-gray-900 hover:text-blue-500 hover:border-blue-300 border-gray-300 hover:bg-blue-200;
+    @apply border border-gray-300 text-blue-500 hover:border-blue-300 hover:bg-blue-200 focus:ring-blue-300;
   }
   .btn-like {
-    @apply bg-pink-600 hover:bg-pink-700 focus:ring-pink-300  dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800;
+    @apply text-white bg-pink-600 hover:bg-pink-700 focus:ring-pink-300  dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800;
   }
   .btn-outline-like {
-    @apply text-pink-500 hover:text-pink-500 hover:border-pink-300 border-pink-500 hover:bg-pink-200;
+    @apply border-pink-500 focus:ring-pink-300  text-pink-500 hover:border-pink-300 hover:bg-pink-200 hover:text-pink-500;
   }
 
   .btn-outline-comment {
-    @apply text-green-500 hover:text-green-500 hover:border-green-300 border-green-500 hover:bg-green-200;
+    @apply border-green-500 text-green-500 hover:border-green-300 hover:bg-green-200 hover:text-green-500;
   }
 
   .btn-sm {
-    @apply text-sm px-2.5 py-2;
+    @apply px-2 py-1.5 text-sm;
   }
 
   .link {
@@ -28,6 +28,10 @@
   }
 
   .textarea {
-    @apply w-full text-sm md:text-base rounded-lg px-3 text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:text-white dark:placeholder-gray-400;
+    @apply w-full rounded-lg border-0 bg-white px-3 text-sm text-gray-900 focus:ring-4 focus:ring-blue-300 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 md:text-base;
+  }
+
+  .avatar {
+    @apply w-8 h-8 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full border border-gray-100;
   }
 }

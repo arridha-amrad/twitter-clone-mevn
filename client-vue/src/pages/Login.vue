@@ -1,10 +1,10 @@
 <template>
   <main class="container mx-auto">
-    <div class="flex justify-content-center align-items-center h-screen">
-      <div class="space-y-5 border rounded-lg py-16 px-12 max-w-[500px] shadow w-full">
-        <h1 class="font-bold text-3xl">Twitter</h1>
+    <div class="flex h-screen items-center justify-center p-6 md:p-12">
+      <div class="w-full max-w-[500px] space-y-5 md:bg-white md:py-16 md:px-12 rounded-lg">
+        <h1 class="text-3xl font-bold">Twitter</h1>
         <LoginFeature />
-        <div class="d-flex align-items-center justify-content-between mt-3">
+        <div class="flex justify-between">
           <router-link class="link" to="/register">forgot password</router-link>
           <router-link class="link" to="/register">Register</router-link>
         </div>

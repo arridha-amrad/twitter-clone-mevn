@@ -1,14 +1,7 @@
-<script setup lang="ts">
-import SidebarOffCanvas from './components/SidebarOffCanvas.vue';
-import Toast from './components/Toast.vue';
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <SidebarOffCanvas />
   <router-view></router-view>
-  <Toast />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

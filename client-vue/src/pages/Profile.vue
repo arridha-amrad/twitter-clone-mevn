@@ -1,14 +1,14 @@
 <template>
   <main>
-    <div class="container-lg">
-      <div class="row">
+    <div class="container mx-auto">
+      <div class="flex">
         <LayoutLeft>
           <Sidebar />
         </LayoutLeft>
-        <LayoutCenter class="col-lg-5 p-3">
+        <LayoutCenter>
           <h1>This is profile page</h1>
         </LayoutCenter>
-        <LayoutRight class="col-lg-4 bg-danger bg-opacity-10 p-3">
+        <LayoutRight>
           <SearchInput />
         </LayoutRight>
       </div>

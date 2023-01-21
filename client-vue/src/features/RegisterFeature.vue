@@ -1,11 +1,31 @@
 <template>
   <form @submit.prevent="submit" class="flex flex-col gap-2">
-    <div v-if="alertMessage" :class="['alert', alertType]" role="alert">{{ alertMessage }}</div>
-    <Input type="text" label-text="Email Address" id="email" v-model="email" />
-    <Input type="text" label-text="Username" id="username" v-model="username" />
-    <Input :type="toggleType" label-text="Password" id="password" v-model="password" />
+    <Alert
+      v-show="alert.message !== ''"
+      :message="alert.message"
+      :type="alert.type"
+    />
+    <Input
+      ref="input"
+      type="text"
+      label-text="Email Address"
+      id="email"
+      v-model="state.email"
+    />
+    <Input
+      type="text"
+      label-text="Username"
+      id="username"
+      v-model="state.username"
+    />
+    <Input
+      :type="toggleType"
+      label-text="Password"
+      id="password"
+      v-model="state.password"
+    />
     <CheckBox v-model="isShowPassword" label-text="Show Password" />
-    <button :disabled="isLoading" type="submit" class="btn btn-primary btn-lg mt-3">
+    <button :disabled="isLoading" type="submit" class="btn btn-primary">
       <Spinner v-if="isLoading">loading...</Spinner>
       <span v-else>Register</span>
     </button>
@@ -13,45 +33,57 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import Input from "@/components/Input.vue";
 import CheckBox from "@/components/CheckBox.vue";
 import authStore from "@/stores/authStore";
 import Spinner from "@/components/Spinner.vue";
-const store = authStore()
-const username = ref("");
-const email = ref("");
-const password = ref("");
-const alertMessage = ref("")
-const isShowPassword = ref(false);
-const isAlertSuccess = ref(true)
-const isLoading = ref(false)
+import Alert, { TAlert } from "@/components/Alert.vue";
 
-const alertType = computed(() => isAlertSuccess.value ? "alert-success" : "alert-danger")
+const store = authStore();
+
+const input = ref<InstanceType<typeof Input> | null>();
+
+onMounted(() => {
+  input.value?.input?.focus();
+});
+
+const state = reactive({
+  username: "",
+  email: "",
+  password: "",
+});
+
+const alert = reactive<{ message: string; type: TAlert }>({
+  message: "",
+  type: "error",
+});
+
+const isShowPassword = ref(false);
+const isLoading = ref(false);
+
 const toggleType = computed(() => (isShowPassword.value ? "text" : "password"));
 
 const submit = async () => {
-  const u = username.value;
-  const e = email.value;
-  const pwd = password.value;
-  if (!u || !e || !pwd) return
+  const { email, password, username } = state;
+  if (!username || !email || !password) return;
   try {
-    isLoading.value = true
+    isLoading.value = true;
     const result = await store.register({
-      email: e,
-      password: pwd,
-      username: u
-    })
-    alertMessage.value = result.message
-    isAlertSuccess.value = true
-    username.value = ""
-    email.value = ""
-    password.value = ""
+      email,
+      password,
+      username,
+    });
+    alert.message = result.message;
+    alert.type = "success";
+    state.email = "";
+    state.password = "";
+    state.username = "";
   } catch (err: any) {
-    alertMessage.value = err.data.message
-    isAlertSuccess.value = false
+    alert.message = err.data.message;
+    alert.type = "error";
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 };
 </script>

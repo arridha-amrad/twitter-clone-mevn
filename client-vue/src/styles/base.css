@@ -1,0 +1,45 @@
+@layer base {
+  body {
+    font-family: "Open Sans", sans-serif !important;
+    background-color: #f1f2f2;
+    @apply subpixel-antialiased;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  p {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    @apply text-sm md:text-base;
+  }
+
+  li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  label {
+    @apply text-sm text-gray-500 subpixel-antialiased dark:text-gray-300  md:text-base;
+  }
+
+  input[type] {
+    @apply border-2 border-gray-300 bg-transparent focus:border-transparent focus:ring-4 focus:ring-blue-300 focus:ring-offset-0;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    @apply w-full rounded-lg text-sm text-gray-900 outline-none  dark:border-gray-600 dark:text-gray-500 md:text-base;
+  }
+
+  input[type="checkbox"] {
+    @apply h-5 w-5 cursor-pointer rounded-md text-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600;
+  }
+
+  textarea {
+    resize: none;
+  }
+}
