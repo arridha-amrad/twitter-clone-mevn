@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from "vue";
-import Input from "@/components/Input.vue";
+import Input from "@/components/Input/InputFloatingLabel.vue";
 import CheckBox from "@/components/CheckBox.vue";
 import authStore from "@/stores/authStore";
 import Spinner from "@/components/Spinner.vue";

@@ -1,7 +1,9 @@
 <template>
   <main class="container mx-auto">
     <div class="flex h-screen items-center justify-center p-6 md:p-12">
-      <div class="w-full max-w-[500px] space-y-5 md:bg-white md:py-16 md:px-12 rounded-lg">
+      <div
+        class="w-full max-w-[500px] space-y-5 md:bg-white md:py-16 md:px-12 rounded-lg"
+      >
         <h1 class="text-3xl font-bold">Twitter</h1>
         <LoginFeature />
         <div class="flex justify-between">

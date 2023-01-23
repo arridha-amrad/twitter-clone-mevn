@@ -4,7 +4,10 @@
       <img class="h-16 w-16" src="/logo.png" />
     </div>
     <div v-for="link in links">
-      <button @click="navigate(link.path)" :class="['btn', 'w-full', checkActive(link.path)]">
+      <button
+        @click="navigate(link.path)"
+        :class="['btn', 'w-full', checkActive(link.path)]"
+      >
         {{ link.name }}
       </button>
     </div>

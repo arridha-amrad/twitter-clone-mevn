@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import Sidebar from "@/components/Sidebar.vue"
-import SearchInput from "@/components/SearchInput.vue"
-import LayoutLeft from "@/components/LayoutLeft.vue";
-import LayoutCenter from "@/components/LayoutCenter.vue";
-import LayoutRight from "@/components/LayoutRight.vue";
+import Sidebar from "@/components/Sidebar.vue";
+import SearchInput from "@/components/Input/SearchInput.vue";
+import LayoutLeft from "@/components/Layout/LayoutLeft.vue";
+import LayoutCenter from "@/components/Layout/LayoutCenter.vue";
+import LayoutRight from "@/components/Layout/LayoutRight.vue";
 </script>

@@ -1,47 +1,72 @@
 <template>
-  <teleport to="body">
-    <div @click="closeModal" v-show="isShow" class="dwa-modal">
-      <div @click.stop="" :class="['dwa-modal__body', width]">
-        <slot></slot>
+  <teleport to="#modal">
+    <Transition name="modal">
+      <div @click="closeModal" v-show="isShow" class="dwa-modal backdrop-blur">
+        <div @click.stop="" :class="['dwa-modal__body', width]">
+          <slot></slot>
+        </div>
       </div>
-    </div>
+    </Transition>
   </teleport>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watchEffect } from "vue";
 
-const props = defineProps<{ isShow: boolean, closeModal: VoidFunction, isSmallSize?: boolean }>()
-const windowWidth = ref(document.body.clientWidth)
+const props = defineProps<{
+  isShow: boolean;
+  closeModal: VoidFunction;
+  isSmallSize?: boolean;
+}>();
+
+const windowWidth = ref(document.body.clientWidth);
 
 watchEffect((onCleanup) => {
   if (props.isShow) {
-    document.body.style.overflow = "hidden"
+    document.body.style.overflow = "hidden";
   }
   onCleanup(() => {
-    document.body.style.overflow = "auto"
-  })
-})
+    document.body.style.overflow = "auto";
+  });
+});
 
-const width = computed(() => !!props.isSmallSize ? "w-sm" : windowWidth.value < 500 ? "w-100 mx-3" : "w-md")
+const width = computed(() =>
+  !!props.isSmallSize ? "w-sm" : windowWidth.value < 500 ? "w-100 mx-3" : "w-md"
+);
 
 onMounted(() => {
-  window.addEventListener("resize", handleResize)
-})
+  document.addEventListener("keydown", handleEscapePress);
+  window.addEventListener("resize", handleResize);
+});
 
 onUnmounted(() => {
-  window.removeEventListener("resize", handleResize)
-})
+  document.removeEventListener("keydown", handleEscapePress);
+  window.removeEventListener("resize", handleResize);
+});
 
 const handleResize = () => {
-  windowWidth.value = document.body.clientWidth
-}
+  windowWidth.value = document.body.clientWidth;
+};
+
+const handleEscapePress = (e: KeyboardEvent) => {
+  if (e.key === "Escape") {
+    props.closeModal();
+  }
+};
 </script>
 
-
 <style scoped>
+.modal-enter-active,
+.modal-leave-active {
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
+}
 .dwa-modal {
-  @apply backdrop-blur;
   position: fixed;
   top: 0;
   left: 0;

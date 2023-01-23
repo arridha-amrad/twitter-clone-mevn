@@ -1,11 +1,25 @@
 <template>
   <form @submit.prevent="submit" class="flex flex-col gap-2">
-    <div v-show="alert !== ''"
-      class="mb-4 rounded-lg bg-red-100 p-4 text-sm text-red-700 dark:bg-gray-800 dark:text-red-400" role="alert">
+    <div
+      v-show="alert !== ''"
+      class="mb-4 rounded-lg bg-red-100 p-4 text-sm text-red-700 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+    >
       <p>{{ alert }}</p>
     </div>
-    <Input ref="input" type="text" label-text="Email or Username" id="emailOrUsername" v-model="state.identity" />
-    <Input :type="toggleType" label-text="Password" id="password" v-model="state.password" />
+    <Input
+      ref="input"
+      type="text"
+      label-text="Email or Username"
+      id="emailOrUsername"
+      v-model="state.identity"
+    />
+    <Input
+      :type="toggleType"
+      label-text="Password"
+      id="password"
+      v-model="state.password"
+    />
     <CheckBox v-model="isShowPassword" label-text="Show Password" />
     <button :disabled="isLoading" type="submit" class="btn btn-primary">
       <Spinner size="sm" v-if="isLoading">Loading...</Spinner>
@@ -16,7 +30,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from "vue";
-import Input from "@/components/Input.vue";
+import Input from "@/components/Input/InputFloatingLabel.vue";
 import CheckBox from "@/components/CheckBox.vue";
 import authStore from "@/stores/authStore";
 import { useRouter } from "vue-router";

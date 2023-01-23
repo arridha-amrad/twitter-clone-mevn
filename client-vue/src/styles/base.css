@@ -27,7 +27,7 @@
   }
 
   input[type] {
-    @apply border-2 border-gray-300 bg-transparent focus:border-transparent focus:ring-4 focus:ring-blue-300 focus:ring-offset-0;
+    @apply border border-gray-300 bg-transparent focus:border-transparent focus:ring-4 focus:ring-blue-300 focus:ring-offset-0;
   }
 
   input[type="text"],
