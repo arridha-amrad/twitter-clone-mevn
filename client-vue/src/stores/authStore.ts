@@ -34,10 +34,11 @@ const authStore = defineStore("auth", {
         const { data } = await axiosInstance.post("/user/login", body);
         setToken(data.token);
         this.user = data.user;
-        this.isLoading = false;
         return data;
       } catch (err: any) {
         throw err.response;
+      } finally {
+        this.isLoading = false;
       }
     },
     async logout() {

@@ -4,10 +4,8 @@
       <img class="h-16 w-16" src="/logo.png" />
     </div>
     <div v-for="link in links">
-      <button
-        @click="navigate(link.path)"
-        :class="['btn', 'w-full', checkActive(link.path)]"
-      >
+      <button @click="navigate(link.path)"
+        :class="'rounded-lg w-full px-5 py-2.5 text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base ' + checkActive(link.path)">
         {{ link.name }}
       </button>
     </div>
@@ -33,9 +31,9 @@ const links = [
 const navigate = (path: string) => router.push(path);
 const checkActive = (path: string) => {
   if (router.currentRoute.value.path === path) {
-    return "btn-primary";
+    return "bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700 text-white";
   } else {
-    return "btn-outline-primary";
+    return "border border-gray-300 dark:border-gray-700";
   }
 };
 </script>

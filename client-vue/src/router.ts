@@ -64,6 +64,8 @@ router.beforeEach(async (to, from) => {
         };
       }
     }
+  } else {
+    authUserStore.isLoading = false;
   }
 });
 
