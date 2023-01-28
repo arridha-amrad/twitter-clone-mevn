@@ -2,7 +2,7 @@
   <teleport to="#modal">
     <Transition name="modal">
       <div @click="closeModal" v-show="isShow" class="dwa-modal backdrop-blur">
-        <div @click.stop="" :class="['dwa-modal__body', width]">
+        <div @click.stop="" class="dark:bg-slate-700 bg-white rounded-lg p-4 overflow-auto">
           <slot></slot>
         </div>
       </div>
@@ -61,11 +61,13 @@ const handleEscapePress = (e: KeyboardEvent) => {
   opacity: 1;
   transition: all 0.5s ease;
 }
+
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
   transform: scale(1.1);
 }
+
 .dwa-modal {
   position: fixed;
   top: 0;
@@ -86,13 +88,5 @@ const handleEscapePress = (e: KeyboardEvent) => {
 .w-sm {
   width: 300px;
   margin: 0 1rem;
-}
-
-.dwa-modal__body {
-  max-height: 80vh;
-  overflow: auto;
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 0.7rem;
 }
 </style>

@@ -117,6 +117,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.16.16.tgz#ee22fed0b2e0c00ce895cdfae9d32ef069a12e04"
   integrity sha512-1YYpoJ39WV/2bnShPwgdzJklc+XS0bysN6Tpnt1cWPdeoKOG4RMEY1g7i534QxXX/rPvNx/NLJQTTCeORYzipg==
 
+"@heroicons/vue@^2.0.14":
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/@heroicons/vue/-/vue-2.0.14.tgz#5a764a223b993d8d783c482875f7d3da07d6169d"
+  integrity sha512-pA1MLZPX0pyZdaQ5OHD/ILE8V/JCXyWvY2BQig7ZnYO7ZFap9sp969Qasn+1VWxnzB5BLWWcYu80OJPCboWo+g==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -622,6 +627,11 @@ he@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
+
+heroicons@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/heroicons/-/heroicons-2.0.14.tgz#bba3b9df8419e7b1e209d5838bff2da7a7566c3e"
+  integrity sha512-c0783w9OG/5SDsR5+cbTys5XnYEjPeqCs3w76HekZAA4VWjzLBq5nniGaZIcL6OqN42gseDiXAsd5ugNcKX+IQ==
 
 inherits@2.0.3:
   version "2.0.3"

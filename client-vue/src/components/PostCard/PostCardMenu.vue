@@ -1,31 +1,25 @@
 <template>
   <div class="relative">
-    <button
-      class="hover:bg-blue-100 w-8 h-8 rounded-full"
-      @click.stop="isShow = !isShow"
-    >
-      &bull;&bull;&bull;
+    <button ref="btnRef" @click.stop="isShow = !isShow">
+      <MenuIcon class="w-6 h-6 dark:text-gray-400 text-gray-500" />
     </button>
-    <ul ref="menuRef" v-show="isShow" class="bg-white absolute right-0 top-6">
-      <li
-        @click.stop="openModal"
-        class="p-2 border rounded shadow-sm hover:bg-slate-100"
-      >
-        delete
+    <ul ref="menuRef" v-show="isShow"
+      class="absolute overflow-hidden z-50 border dark:border-transparent rounded-lg right-0 bg-white dark:bg-slate-700 top-6 sm:text-sm text-xs">
+      <li @click.stop="openModal" class="p-2 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-500">
+        <p class="w-full whitespace-nowrap sm:text-sm text-xs">delete</p>
       </li>
     </ul>
-    <Modal
-      :is-show="isShowModal"
-      :close-modal="closeModal"
-      :is-small-size="true"
-    >
-      <div class="flex flex-col gap-3 items-center">
-        <h1 class="text-3xl font-bold mb-4">Delete Post</h1>
-        <div>
-          <button @click="deletePost" class="btn btn-outline-danger">
+    <Modal :is-show="isShowModal" :close-modal="closeModal" :is-small-size="true">
+      <div class="flex flex-col items-center gap-2 max-w-[250px]">
+        <h1 class="text-3xl font-bold">Delete Post</h1>
+        <p class="dark:text-gray-400 text-sm text-center">Are you sure to delete this post? <br>
+          This action cannot be undo
+        </p>
+        <div class="flex gap-5 mt-6">
+          <button @click="deletePost" class="sm:text-base text-sm font-bold text-red-500">
             Yes
           </button>
-          <button @click="closeModal" class="btn btn-secondary">Cancel</button>
+          <button @click="closeModal" class="sm:text-base text-sm text-gray-500 dark:text-gray-300">Cancel</button>
         </div>
       </div>
     </Modal>
@@ -38,6 +32,7 @@ import { onClickOutside } from "@vueuse/core";
 import postStore from "@/stores/postStore";
 import Modal from "../Modal.vue";
 import { useRouter } from "vue-router";
+import MenuIcon from "@heroicons/vue/24/outline/EllipsisHorizontalCircleIcon"
 
 const props = defineProps<{
   postId: string;
@@ -59,11 +54,12 @@ const deletePost = async () => {
     if (pageName === "PostDetail" && props.isParentSimplePostCard) {
       router.back();
     }
-  } catch (err) {}
+  } catch (err) { }
 };
 
 const menuRef = ref<HTMLUListElement>();
 const isShow = ref(false);
+const btnRef = ref<HTMLButtonElement>()
 
 onClickOutside(menuRef, () => (isShow.value = false));
 </script>

@@ -1,10 +1,7 @@
 <template>
-  <button
-    @click.stop="openModal"
-    type="button"
-    class="btn btn-outline-comment btn-sm"
-  >
-    {{ post._count.children }} Comments
+  <button @click.stop="openModal" type="button" class="flex items-center gap-1">
+    <span v-show="post._count.children > 0">{{ post._count.children }}</span>
+    <CommentIcon class="w-5 h-5 text-gray-500 dark:text-gray-400" />
   </button>
   <Modal :is-show="isShow" :close-modal="closeModal">
     <div class="bg-white border-0 w-full mb-6">
@@ -30,6 +27,7 @@ import Modal from "./Modal.vue";
 import CreateCommentFeature from "@/features/CreateCommentFeature.vue";
 import { IPostWithParents } from "@/stores/types/post.types";
 import timeSetter from "@/utils/timeSetter";
+import CommentIcon from "@heroicons/vue/24/outline/ChatBubbleOvalLeftIcon"
 
 const isShow = ref(false);
 

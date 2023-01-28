@@ -1,13 +1,19 @@
 <template>
-  <button @click.stop="like" :class="['btn', 'btn-sm', likeBtn]">
-    {{ likeObj.totalLikes }} Like
+  <button class="flex items-center gap-1 sm:text-sm text-xs font-medium" @click.stop="like">
+    <span v-show="likeObj.totalLikes > 0">{{ likeObj.totalLikes }}</span>
+    <span>
+      <HeartIconSolid v-if="likeObj.isLiked" class="w-5 h-5 text-pink-500 dark:text-pink-600" />
+      <HeartIconOutline v-else class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+    </span>
   </button>
 </template>
 
 <script setup lang="ts">
 import { IPostWithParents } from "@/stores/types/post.types";
 import postStore from "@/stores/postStore";
-import { computed, reactive } from "vue";
+import { reactive } from "vue";
+import HeartIconOutline from "@heroicons/vue/24/outline/HeartIcon"
+import HeartIconSolid from "@heroicons/vue/24/solid/HeartIcon"
 const props = defineProps<{ post: IPostWithParents }>();
 
 const likeObj = reactive({
@@ -21,10 +27,7 @@ const like = async () => {
     const isLiked = await store.likePost(props.post.id);
     likeObj.isLiked = isLiked;
     isLiked ? likeObj.totalLikes++ : likeObj.totalLikes--;
-  } catch (err) {}
+  } catch (err) { }
 };
 
-const likeBtn = computed(() =>
-  likeObj.isLiked ? "btn-like" : "btn-outline-like"
-);
 </script>

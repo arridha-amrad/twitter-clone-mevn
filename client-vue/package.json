@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.14",
     "@vueuse/core": "^9.10.0",
     "axios": "^1.2.2",
     "flowbite": "^1.6.2",
+    "heroicons": "^2.0.14",
     "path": "^0.12.7",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",

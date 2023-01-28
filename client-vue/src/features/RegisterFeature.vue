@@ -1,29 +1,9 @@
 <template>
   <form @submit.prevent="submit" class="flex flex-col gap-2">
-    <Alert
-      v-show="alert.message !== ''"
-      :message="alert.message"
-      :type="alert.type"
-    />
-    <Input
-      ref="input"
-      type="text"
-      label-text="Email Address"
-      id="email"
-      v-model="state.email"
-    />
-    <Input
-      type="text"
-      label-text="Username"
-      id="username"
-      v-model="state.username"
-    />
-    <Input
-      :type="toggleType"
-      label-text="Password"
-      id="password"
-      v-model="state.password"
-    />
+    <Alert v-show="alert.message !== ''" :message="alert.message" :type="alert.type" />
+    <Input ref="input" type="text" label-text="Email Address" id="email" v-model="state.email" />
+    <Input type="text" label-text="Username" id="username" v-model="state.username" />
+    <Input :type="toggleType" label-text="Password" id="password" v-model="state.password" />
     <CheckBox v-model="isShowPassword" label-text="Show Password" />
     <button :disabled="isLoading" type="submit" class="btn btn-primary">
       <Spinner v-if="isLoading">loading...</Spinner>
@@ -54,10 +34,21 @@ const state = reactive({
   password: "",
 });
 
+const resetState = () => {
+  state.email = "";
+  state.password = "";
+  state.username = "";
+}
+
 const alert = reactive<{ message: string; type: TAlert }>({
   message: "",
   type: "error",
 });
+
+const setAlert = (type: TAlert, message: string) => {
+  alert.message = message
+  alert.type = type
+}
 
 const isShowPassword = ref(false);
 const isLoading = ref(false);
@@ -74,14 +65,10 @@ const submit = async () => {
       password,
       username,
     });
-    alert.message = result.message;
-    alert.type = "success";
-    state.email = "";
-    state.password = "";
-    state.username = "";
+    resetState()
+    setAlert("success", result.message)
   } catch (err: any) {
-    alert.message = err.data.message;
-    alert.type = "error";
+    setAlert("error", err.data.message)
   } finally {
     isLoading.value = false;
   }
