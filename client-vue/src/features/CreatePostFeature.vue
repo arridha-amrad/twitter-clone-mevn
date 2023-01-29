@@ -4,7 +4,7 @@
       <div class="bg-white rounded-t-lg dark:bg-gray-800">
         <textarea v-model="body" id="comment" rows="4" class="
           w-full rounded-lg border-0 bg-white px-3 text-sm text-gray-900 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 dark:bg-slate-800 dark:text-white dark:placeholder-gray-400 md:text-base
-          " placeholder="Write a comment..."></textarea>
+          " placeholder="Write a post..."></textarea>
       </div>
       <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
         <button :disabled="isLoading" type="submit" class="btn btn-primary btn-sm">

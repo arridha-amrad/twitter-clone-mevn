@@ -19,6 +19,7 @@ const postStore = defineStore("post", {
         this.comments = this.comments.filter(
           (comment) => comment.id !== postId
         );
+        this.posts[0]._count.children--;
       } catch (err: any) {
         throw err.response;
       }

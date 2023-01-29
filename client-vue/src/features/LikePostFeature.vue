@@ -1,6 +1,8 @@
 <template>
   <button class="flex items-center gap-1 sm:text-sm text-xs font-medium" @click.stop="like">
-    <span v-show="likeObj.totalLikes > 0">{{ likeObj.totalLikes }}</span>
+    <span v-show="likeObj.totalLikes > 0">{{
+      likeObj.totalLikes
+    }}</span>
     <span>
       <HeartIconSolid v-if="likeObj.isLiked" class="w-5 h-5 text-pink-500 dark:text-pink-600" />
       <HeartIconOutline v-else class="w-5 h-5 text-gray-500 dark:text-gray-400" />

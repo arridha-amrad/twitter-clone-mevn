@@ -18,7 +18,9 @@ const authStore = defineStore("auth", {
       } catch (err: any) {
         throw err.response;
       } finally {
-        this.isLoading = false;
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 1000);
       }
     },
     register: async (body: RegisterDTO) => {

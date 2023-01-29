@@ -1,6 +1,6 @@
 <template>
   <h1 class="my-4 text-2xl font-bold">Comments</h1>
-  <TransitionGroup name="list" tag="ul" :css="false">
+  <TransitionGroup name="list" tag="ul">
     <li v-for="post in comments" :key="post.id" class="mb-3">
       <PostCard :post="post" />
     </li>
@@ -26,6 +26,7 @@ defineProps<{ comments: IPostWithParents[] }>();
   opacity: 0;
   transform: translateY(-100px);
 }
+
 .list-leave-to {
   opacity: 0;
   transform: translateX(30px);

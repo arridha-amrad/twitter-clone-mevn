@@ -1,11 +1,9 @@
 @layer base {
   html {
-    background-color: #f1f2f2;
-    color: #000;
+    @apply bg-gray-100 text-gray-800;
   }
   html.dark {
-    background-color: #242424;
-    color: #eee;
+    @apply bg-black text-gray-200;
   }
   html::-webkit-scrollbar-thumb {
     background-color: #aaa;
@@ -22,10 +20,8 @@
     background-color: #242424;
   }
   body {
-    font-family: "Open Sans", sans-serif !important;
-    @apply subpixel-antialiased;
+    font-family: "Inter", sans-serif;
   }
-
   ul {
     padding: 0;
     margin: 0;

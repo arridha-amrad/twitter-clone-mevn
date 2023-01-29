@@ -10,31 +10,23 @@
             <Spinner />
           </div>
           <div v-else>
-            <Alert
-              type="error"
-              message="Post not found"
-              v-if="postDetail === null"
-            />
-            <div v-else>
+            <Alert type="error" message="Post not found" v-if="postDetail === null" />
+            <div v-else class="border rounded-lg dark:border-0">
               <SimplePostCard :post="postDetail!" />
-              <div class="flex p-2 border border-t-0 d-flex justify-around">
+              <div class="flex p-2 d-flex justify-around">
                 <like-post :post="postDetail!" />
-                <button
-                  @click="inputRef?.commentInput?.focus()"
-                  class="btn btn-outline-comment btn-sm"
-                >
-                  {{ postDetail._count.children }} Comments
+                <button @click="inputRef?.commentInput?.focus()" class="relative">
+                  <span class="absolute right-7 top-1/2 -translate-y-1/2" v-show="postDetail._count.children > 0">{{
+                    postDetail._count.children
+                  }}</span>
+                  <CommentIcon class="w-5 h-5 text-gray-500 dark:text-gray-400" />
                 </button>
               </div>
-              <div class="border border-top-0 p-2">
-                <CreateCommentFeature
-                  ref="inputRef"
-                  :is-detail-page="true"
-                  :post-id="postDetail!.id"
-                />
+              <div class="p-2">
+                <CreateCommentFeature ref="inputRef" :is-detail-page="true" :post-id="postDetail!.id" />
               </div>
-              <Comments :comments="comments" />
             </div>
+            <Comments :comments="comments" />
           </div>
         </LayoutCenter>
         <LayoutRight>
@@ -45,6 +37,7 @@
   </main>
 </template>
 <script setup lang="ts">
+import CommentIcon from "@heroicons/vue/24/outline/ChatBubbleOvalLeftIcon"
 import Alert from "@/components/Alert.vue";
 import LayoutCenter from "@/components/Layout/LayoutCenter.vue";
 import LayoutLeft from "@/components/Layout/LayoutLeft.vue";
