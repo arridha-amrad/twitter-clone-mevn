@@ -3,6 +3,7 @@ export type IPost = Post & {
   medias: Media[];
   _count: IPostCount;
   isLiked: boolean;
+  isReposted: boolean;
 };
 
 export type IPostWithParents = IPost & {
@@ -17,6 +18,7 @@ export interface IPostCount {
   children: number;
   likes: number;
   medias: number;
+  reposts: number;
 }
 
 export interface IAuthor {

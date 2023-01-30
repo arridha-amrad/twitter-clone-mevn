@@ -22,9 +22,7 @@
                   <CommentIcon class="w-5 h-5 text-gray-500 dark:text-gray-400" />
                 </button>
               </div>
-              <div class="p-2">
-                <CreateCommentFeature ref="inputRef" :is-detail-page="true" :post-id="postDetail!.id" />
-              </div>
+              <CreateCommentFeature ref="inputRef" :is-detail-page="true" :post-id="postDetail!.id" />
             </div>
             <Comments :comments="comments" />
           </div>

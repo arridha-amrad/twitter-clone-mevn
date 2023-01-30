@@ -1,8 +1,10 @@
 <template>
   <div class="relative">
-    <button ref="btnRef" @click.stop="isShow = !isShow">
-      <MenuIcon class="w-6 h-6 dark:text-gray-400 text-gray-500" />
+
+    <button ref="btnRef" class="group" @click.stop="isShow = !isShow">
+      <MenuIcon class="w-6 dark:text-gray-400 text-gray-500 group-hover:text-blue-500" />
     </button>
+
     <ul ref="menuRef" v-show="isShow"
       class="absolute overflow-hidden z-50 border dark:border-transparent rounded-lg right-0 bg-white dark:bg-slate-700 top-6 sm:text-sm text-xs">
       <li @click.stop="openModal" class="p-2 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-500">
@@ -32,7 +34,8 @@ import { onClickOutside } from "@vueuse/core";
 import postStore from "@/stores/postStore";
 import Modal from "../Modal.vue";
 import { useRouter } from "vue-router";
-import MenuIcon from "@heroicons/vue/24/outline/EllipsisHorizontalCircleIcon"
+import MenuIcon from "@heroicons/vue/24/outline/EllipsisHorizontalIcon"
+import Tooltip from "../Tooltip.vue";
 
 const props = defineProps<{
   postId: string;

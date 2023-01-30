@@ -36,9 +36,19 @@ const getOnePost = async (req: Request, res: Response) => {
         userId: idUser,
       },
     });
+    const isReposted = await prisma.repost.findFirst({
+      where: {
+        postId,
+        userId,
+      },
+    });
 
     // @ts-ignore
     storedPost["isLiked"] = !!isLiked;
+
+    // @ts-ignore
+    storedPost["isReposted"] = !!isReposted;
+
     for (let currPost of storedPost.children) {
       const like = await prisma.like.findFirst({
         where: {
@@ -46,8 +56,16 @@ const getOnePost = async (req: Request, res: Response) => {
           userId: idUser,
         },
       });
+      const isReposted = await prisma.repost.findFirst({
+        where: {
+          postId,
+          userId,
+        },
+      });
       // @ts-ignore
       currPost["isLiked"] = !!like;
+      // @ts-ignore
+      currPost["isReposted"] = !!isReposted;
     }
     return res.status(200).json({ post: storedPost });
   } catch (err) {

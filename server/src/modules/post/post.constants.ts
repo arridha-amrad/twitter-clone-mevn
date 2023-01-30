@@ -17,6 +17,7 @@ export const POST_INCLUDED_DATA = {
       children: true,
       likes: true,
       medias: true,
+      reposts: true,
     },
   },
   medias: QUERY_MEDIAS,

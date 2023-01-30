@@ -20,7 +20,8 @@ model User {
   updatedAt DateTime @updatedAt
   tokens    Token[]
   likes     Like[]
-  posts     Post[]
+  posts     Post[]   @relation("WrittenPosts")
+  reposts   Repost[]
 
   @@map("users")
 }
@@ -50,7 +51,7 @@ model Like {
 model Post {
   id        String   @id @default(cuid())
   body      String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation("WrittenPosts", fields: [authorId], references: [id])
   authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -59,8 +60,26 @@ model Post {
   children  Post[]   @relation("ParentChild")
   likes     Like[]
   medias    Media[]
+  // repostParentId String?
+  // repostParent   Post?    @relation("PostRepost", fields: [repostParentId], references: [id], onDelete: Cascade)
+  // reposts        Post[]   @relation("PostRepost")
+  // repostBy       User?    @relation("RepostPosts", fields: [repostById], references: [id])
+  // repostById     String?
+  reposts   Repost[]
 
   @@map("posts")
+}
+
+model Repost {
+  id        String   @id @default(cuid())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    String
+  userId    String
+
+  @@map("reposts")
 }
 
 model Media {

@@ -1,10 +1,12 @@
 <template>
-  <button @click.stop="openModal" type="button" class="flex items-center gap-1 sm:text-sm text-xs font-medium">
-    <span v-show="post._count.children > 0">{{
-      post._count.children
-    }}</span>
-    <CommentIcon class="w-5 h-5 text-gray-500 dark:text-gray-400" />
-  </button>
+  <Tooltip class="group" tip="Comment">
+    <button @click.stop="openModal" type="button" class="flex items-center gap-1 sm:text-sm text-xs font-medium">
+      <span v-show="post._count.children > 0">{{
+        post._count.children
+      }}</span>
+      <CommentIcon class="w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-green-500" />
+    </button>
+  </Tooltip>
 
   <Modal :is-show="isShow" :close-modal="closeModal">
     <div class="border-0 space-y-5 w-full md:min-w-[500px] sm:min-w-[300px]">
@@ -42,6 +44,7 @@ import CommentIcon from "@heroicons/vue/24/outline/ChatBubbleOvalLeftIcon"
 import Avatar from "./Avatar.vue";
 import Spinner from "./Spinner.vue";
 import postStore from "@/stores/postStore";
+import Tooltip from "./Tooltip.vue";
 
 const isShow = ref(false);
 

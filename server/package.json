@@ -3,13 +3,13 @@
     "dev": "tsx watch src"
   },
   "dependencies": {
-    "@prisma/client": "4.8.1",
+    "@prisma/client": "^4.9.0",
     "argon2": "^0.30.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "prisma": "^4.8.1"
+    "prisma": "^4.9.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",

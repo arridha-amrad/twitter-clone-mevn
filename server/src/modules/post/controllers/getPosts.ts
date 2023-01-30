@@ -21,6 +21,7 @@ const getPosts = async (req: Request, res: Response) => {
       let currentPost: IPostWithParents = {
         ...post,
         isLiked: false,
+        isReposted: false,
         parents: [],
         medias: [],
       };
@@ -30,7 +31,14 @@ const getPosts = async (req: Request, res: Response) => {
           userId,
         },
       });
+      const isReposted = await prisma.repost.findFirst({
+        where: {
+          postId: post.id,
+          userId,
+        },
+      });
       currentPost.isLiked = !!isLiked;
+      currentPost.isReposted = !!isReposted;
       if (currentPost.parentId) {
         const postParents = await getPostParents(
           currentPost.parentId,

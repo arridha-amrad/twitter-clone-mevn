@@ -1,9 +1,9 @@
 <template>
   <div class="container mx-auto">
     <div class="flex">
-      <layout-left>
+      <LayoutLeft>
         <Sidebar />
-      </layout-left>
+      </LayoutLeft>
       <LayoutCenter>
         <CreatePostFeature ref="postCreatorRef" />
         <LoadPostsFeature />

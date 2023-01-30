@@ -12,6 +12,13 @@ const postStore = defineStore("post", {
     comments: [] as IPostWithParents[],
   }),
   actions: {
+    async repost(postId: string) {
+      try {
+        await axiosInstance.post(`/posts/repost/${postId}`);
+      } catch (err: any) {
+        throw err.response;
+      }
+    },
     async deletePost(postId: string) {
       try {
         await axiosInstance.delete(`/posts/delete/${postId}`);

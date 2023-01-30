@@ -3,10 +3,10 @@
     <div class="flex gap-4">
       <Avatar :url="avatar" />
       <div id="post-content" class="flex-1 space-y-4">
-        <div class="flex gap-2">
+        <div class="flex gap-2 items-center">
           <h1 class="font-bold">{{ post.author.username }}</h1>
           <div>&bull;</div>
-          <div class="flex-1 text-gray-500 dark:text-gray-200">{{ date }}</div>
+          <div class="flex-1 sm:text-sm text-xs text-gray-500 dark:text-gray-200">{{ date }}</div>
           <PostMenu :is-parent-simple-post-card="true" v-show="isMyPost" :post-id="post.id" />
         </div>
         <ParentPostAuthor :users="users" />
