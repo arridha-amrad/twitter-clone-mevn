@@ -9,7 +9,10 @@
       <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
         <button :disabled="isLoading" type="submit"
           class="rounded-lg px-5 py-1.5 text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-400 disabled:bg-blue-400">
-          Post
+          <span v-if="!isLoading">Post</span>
+          <Spinner v-else>
+            <span>loading...</span>
+          </Spinner>
         </button>
         <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
           <ul class="-space-x-3 flex">
@@ -36,21 +39,19 @@ import Toast from "@/components/Toast.vue";
 import postStore from "@/stores/postStore";
 import { ref, watchEffect } from "vue";
 import ImageIcon from "@heroicons/vue/24/outline/PhotoIcon"
-import axiosInstance from "@/utils/axiosInterceptor";
+import Spinner from "@/components/Spinner.vue";
 
 const store = postStore();
 const isLoading = ref(false);
 const toastMessage = ref("");
 const body = ref("");
 const filesToPreview = ref<string[]>([])
-const uploadedImages: File[] = []
-const formData = new FormData()
-
-
+const filesToUpload = ref<File[]>([])
 const fileInputRef = ref<HTMLInputElement>()
 
 const fileInputChange = (e: any) => {
   filesToPreview.value = []
+  filesToUpload.value = []
   const images = fileInputRef.value?.files
   if (!images) return
   console.log("images : ", images);
@@ -58,7 +59,7 @@ const fileInputChange = (e: any) => {
     const url = URL.createObjectURL(images[i])
     const image = images[i]
     filesToPreview.value.push(url)
-    uploadedImages.push(image)
+    filesToUpload.value.push(image)
   }
 }
 
@@ -73,17 +74,21 @@ watchEffect(() => {
   }
 });
 
-
 const submit = async () => {
   const b = body.value;
   if (!b) return;
   try {
-    formData.append("text", b)
-    uploadedImages.map((file) => formData.append("files", file))
+    const formData = new FormData()
     isLoading.value = true;
-    await axiosInstance.post("/posts/create-post", formData)
+    formData.append("text", b)
+    filesToUpload.value.map((file) => formData.append("images", file))
+    await store.createPost(formData)
     toastMessage.value = "new post created...";
     body.value = "";
+    filesToPreview.value = []
+    filesToUpload.value = []
+    formData.delete("text")
+    formData.delete("images")
   } catch (err) {
     console.log("err : ", err);
   } finally {

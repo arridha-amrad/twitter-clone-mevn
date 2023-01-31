@@ -37,6 +37,12 @@ const getPosts = async (req: Request, res: Response) => {
           userId,
         },
       });
+      const medias = await prisma.media.findMany({
+        where: {
+          postId: post.id,
+        },
+      });
+      currentPost.medias = medias;
       currentPost.isLiked = !!isLiked;
       currentPost.isReposted = !!isReposted;
       if (currentPost.parentId) {
