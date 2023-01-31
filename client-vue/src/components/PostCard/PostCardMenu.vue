@@ -1,13 +1,11 @@
 <template>
   <div class="relative">
-
     <button ref="btnRef" class="group" @click.stop="isShow = !isShow">
       <MenuIcon class="w-6 dark:text-gray-400 text-gray-500 group-hover:text-blue-500" />
     </button>
-
     <ul ref="menuRef" v-show="isShow"
       class="absolute overflow-hidden z-50 border dark:border-transparent rounded-lg right-0 bg-white dark:bg-slate-700 top-6 sm:text-sm text-xs">
-      <li @click.stop="openModal" class="p-2 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-500">
+      <li @click.stop="openModal" class="p-2 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-500 cursor-pointer">
         <p class="w-full whitespace-nowrap sm:text-sm text-xs">delete</p>
       </li>
     </ul>
@@ -33,9 +31,8 @@ import { ref } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import postStore from "@/stores/postStore";
 import Modal from "../Modal.vue";
-import { useRouter } from "vue-router";
 import MenuIcon from "@heroicons/vue/24/outline/EllipsisHorizontalIcon"
-import Tooltip from "../Tooltip.vue";
+
 
 const props = defineProps<{
   postId: string;
@@ -46,17 +43,11 @@ const store = postStore();
 const isShowModal = ref(false);
 const openModal = () => (isShowModal.value = true);
 const closeModal = () => (isShowModal.value = false);
-const router = useRouter();
-
-const pageName = router.currentRoute.value.name;
 
 const deletePost = async () => {
   try {
     await store.deletePost(props.postId);
     closeModal();
-    if (pageName === "PostDetail" && props.isParentSimplePostCard) {
-      router.back();
-    }
   } catch (err) { }
 };
 

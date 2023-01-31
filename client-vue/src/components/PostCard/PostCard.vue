@@ -15,7 +15,7 @@
         </div>
         <ParentPostAuthor :users="authors" />
         <p class="text-gray-500 dark:text-gray-300 sm:text-base text-sm">{{ post.body }}</p>
-        <div class="flex items-center justify-between gap-4 mt-5">
+        <div class="flex items-center w-3/4 justify-between gap-4 mt-5">
           <LikePostButton :post="post" />
           <RePostButton :post="post" />
           <CommentButton :post="post" />

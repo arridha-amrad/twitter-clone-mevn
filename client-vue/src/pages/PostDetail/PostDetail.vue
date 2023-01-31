@@ -15,11 +15,11 @@
               <SimplePostCard :post="postDetail!" />
               <div class="flex p-2 d-flex justify-around">
                 <like-post :post="postDetail!" />
-                <button @click="inputRef?.commentInput?.focus()" class="relative">
-                  <span class="absolute right-7 top-1/2 -translate-y-1/2" v-show="postDetail._count.children > 0">{{
-                    postDetail._count.children
-                  }}</span>
-                  <CommentIcon class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <RePostFeature :post="postDetail" />
+                <button @click="inputRef?.commentInput?.focus()" class="relative group">
+                  <CountLabel :count="postDetail._count.children" />
+                  <CommentIcon class="w-5 h-5 text-gray-500 group-hover:text-green-500
+             dark:text-gray-400" />
                 </button>
               </div>
               <CreateCommentFeature ref="inputRef" :is-detail-page="true" :post-id="postDetail!.id" />
@@ -50,6 +50,8 @@ import postStore from "@/stores/postStore";
 import { computed, onUnmounted, provide, ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import Comments from "./Comments.vue";
+import CountLabel from "@/components/CountLabel.vue";
+import RePostFeature from "@/features/RePostFeature.vue";
 
 provide("isComment", false);
 

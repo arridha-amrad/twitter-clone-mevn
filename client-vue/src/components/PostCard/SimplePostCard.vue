@@ -7,7 +7,6 @@
           <h1 class="font-bold">{{ post.author.username }}</h1>
           <div>&bull;</div>
           <div class="flex-1 sm:text-sm text-xs text-gray-500 dark:text-gray-200">{{ date }}</div>
-          <PostMenu :is-parent-simple-post-card="true" v-show="isMyPost" :post-id="post.id" />
         </div>
         <ParentPostAuthor :users="users" />
         <p>{{ post.body }}</p>
@@ -21,7 +20,6 @@ import authStore from "@/stores/authStore";
 import { IPostWithParents } from "@/stores/types/post.types";
 import timeSetter from "@/utils/timeSetter";
 import { computed } from "vue";
-import PostMenu from "./PostCardMenu.vue";
 import Avatar from "../Avatar.vue";
 import ParentPostAuthor from "./ParentPostAuthor.vue";
 

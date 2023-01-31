@@ -1,10 +1,8 @@
 <template>
-  <Tooltip class="group" tip="Comment">
+  <Tooltip class="group" tip="comment">
     <button @click.stop="openModal" type="button" class="flex items-center gap-1 sm:text-sm text-xs font-medium">
-      <span v-show="post._count.children > 0">{{
-        post._count.children
-      }}</span>
       <CommentIcon class="w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-green-500" />
+      <CountLabel :count="post._count.children" />
     </button>
   </Tooltip>
 
@@ -45,6 +43,7 @@ import Avatar from "./Avatar.vue";
 import Spinner from "./Spinner.vue";
 import postStore from "@/stores/postStore";
 import Tooltip from "./Tooltip.vue";
+import CountLabel from "./CountLabel.vue";
 
 const isShow = ref(false);
 

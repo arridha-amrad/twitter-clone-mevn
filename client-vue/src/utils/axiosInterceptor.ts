@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
     // @ts-ignore
     config.headers!["authorization"] = getToken();
     // @ts-ignore
-    config.headers!["Content-Type"] = "application/json";
+    // config.headers!["Content-Type"] = "application/json";
     return config;
   },
   (err) => Promise.reject(err)

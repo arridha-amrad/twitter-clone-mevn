@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex font-medium sm:text-base text-sm items-center gap-2 dark:bg-blue-700 bg-blue-600 rounded-lg px-3 py-1 text-white"
+    class="flex gap-2 rounded-lg px-5 py-1.5 text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-400 disabled:bg-blue-400"
     @click="showModal">
     <Icon class="w-5 h-5" />
     logout

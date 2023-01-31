@@ -11,7 +11,7 @@ import repost from "./controllers/repost";
 
 const router = express.Router();
 
-router.post("/create-post", verifyAuthToken, createPost);
+router.post("/create-post", createPost);
 router.post("/like-post", verifyAuthToken, likePost);
 router.post("/create-comment", verifyAuthToken, createComment);
 router.get("/detail/:postId", verifyAuthToken, getOnePost);

@@ -94,11 +94,17 @@ const postStore = defineStore("post", {
         throw err.response;
       }
     },
-    async createPost(body: string) {
+    async createPost(formData: FormData) {
       try {
-        const { data } = await axiosInstance.post("/posts/create-post", {
-          body,
-        });
+        const { data } = await axiosInstance.post(
+          "/posts/create-post",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         this.posts.splice(0, 0, data.post);
       } catch (err: any) {
         throw err.response;

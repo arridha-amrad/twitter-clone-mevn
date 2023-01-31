@@ -1,6 +1,6 @@
 <template>
   <TransitionGroup name="list" :css="false" tag="ul">
-    <li v-for="post in store.posts" :key="post.id">
+    <li v-for="(post) in store.posts" :key="post.id">
       <PostCard class="mt-4" :post="post" />
     </li>
   </TransitionGroup>
@@ -16,7 +16,7 @@ const store = postStore();
 onMounted(async () => {
   try {
     await store.getPosts();
-  } catch (err) {}
+  } catch (err) { }
 });
 </script>
 
