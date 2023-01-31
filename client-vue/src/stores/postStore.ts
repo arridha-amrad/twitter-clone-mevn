@@ -98,12 +98,7 @@ const postStore = defineStore("post", {
       try {
         const { data } = await axiosInstance.post(
           "/posts/create-post",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
+          formData
         );
         this.posts.splice(0, 0, data.post);
       } catch (err: any) {

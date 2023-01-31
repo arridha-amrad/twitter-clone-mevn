@@ -94,13 +94,21 @@ export const verifyAuthToken = async (
     (err, payload) => {
       if (err !== null) {
         if (err.message === "jwt expired") {
-          res.status(401).send("token expired");
-          return;
+          const files = req.files?.images;
+          if (files) {
+            if (files instanceof Array) {
+              for (let file of files) {
+                fs.unlinkSync(file.tempFilePath);
+              }
+            } else {
+              fs.unlinkSync(files.tempFilePath);
+            }
+          }
+          return res.status(401).send("token expired");
         } else {
           throw new Error(`Verification token failure : ${err.message}`);
         }
       }
-
       const { userId, type } = payload as IVerifyTokenPayload;
       if (type !== "AccessToken") {
         res.status(403).json({ error: "invalid token" });

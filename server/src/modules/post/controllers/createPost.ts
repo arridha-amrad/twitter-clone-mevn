@@ -6,21 +6,15 @@ import { IPostWithParents } from "../post.types";
 import { upload } from "@/utils/cloudinary";
 import { Media } from "@prisma/client";
 
-import fs from "fs";
-
 const createPost = async (req: Request, res: Response) => {
   const postDescription = req.body.text;
   const images = req.files?.images;
-
-  console.log(images);
-
   try {
     const userId = req.app.locals.userId;
     const mediaURL: string[] = [];
     if (images) {
       if (images instanceof Array) {
         for (let i = 0; i < images.length; i++) {
-          console.log("temp : ", images[i].tempFilePath);
           const result = await upload(images[i]);
           mediaURL.push(result.url);
         }
