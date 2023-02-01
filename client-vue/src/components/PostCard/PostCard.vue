@@ -1,6 +1,6 @@
 <template>
   <article @click="navigate(post.id)"
-    class="w-full h-full box-border rounded-lg border-0 bg-white hover:bg-gray-50 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:bg-opacity-50 md:px-4 md:py-3 px-3 py-1.5"
+    class="w-full h-fit box-border rounded-lg border-0 bg-white hover:bg-gray-50 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:bg-opacity-50 md:px-4 md:py-3 px-3 py-1.5"
     role="button">
     <div class="flex sm:gap-4 gap-2">
       <Avatar :url="avatar" />
@@ -15,7 +15,7 @@
         </div>
         <ParentPostAuthor :users="authors" />
         <p class="text-gray-500 dark:text-gray-300 sm:text-base text-sm">{{ post.body }}</p>
-        <PostMedia :urls="urls" />
+        <PostCardCarousel :urls="urls" />
         <div class="flex items-center w-3/4 justify-between gap-4 mt-5">
           <LikePostButton :post="post" />
           <RePostButton :post="post" />
@@ -38,7 +38,8 @@ import authStore from "@/stores/authStore";
 import ParentPostAuthor from "./ParentPostAuthor.vue";
 import Avatar from "../Avatar.vue";
 import RePostButton from "@/features/RePostFeature.vue";
-import PostMedia from "../PostMedia.vue";
+
+import PostCardCarousel from "./PostCardCarousel.vue";
 
 const userStore = authStore();
 
