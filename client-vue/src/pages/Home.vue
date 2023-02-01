@@ -17,7 +17,9 @@
     </div>
   </div>
   <div v-show="isShow" class="fixed bottom-5 right-5">
-    <button @click="goUp" class="btn btn-primary">Go Up</button>
+    <button @click="goUp" class="btn btn-primary">
+      <Icon class="w-5 h-5" />
+    </button>
   </div>
 </template>
 
@@ -33,6 +35,7 @@ import LayoutLeft from "@/components/Layout/LayoutLeft.vue";
 import LayoutCenter from "@/components/Layout/LayoutCenter.vue";
 import LayoutRight from "@/components/Layout/LayoutRight.vue";
 import Spinner from "@/components/Spinner.vue";
+import Icon from "@heroicons/vue/24/outline/ArrowUpIcon"
 
 const isShow = ref(false);
 const postCreatorRef = ref<InstanceType<typeof CreatePostFeature> | null>(null);
@@ -44,6 +47,8 @@ onMounted(() => {
     } else {
       isShow.value = false;
     }
+  }, {
+    rootMargin: "0px 0px 100px 0px"
   });
   if (!postCreatorRef.value) return;
   if (postCreatorRef.value.postFormRef)

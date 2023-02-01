@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import authStore from './stores/authStore';
+import Toast from './components/Toast.vue';
+import uiStore from "./stores/uiStore"
+import Backdrop from './components/Backdrop.vue';
 
 const store = authStore()
 
@@ -18,6 +21,8 @@ onMounted(() => {
   applyTheme()
 })
 
+const uS = uiStore()
+
 </script>
 
 <template>
@@ -25,6 +30,9 @@ onMounted(() => {
     <img class="w-20 h-20" src="./assets/spinner.svg" alt="spinner" />
   </div>
   <RouterView v-else></RouterView>
+  <Toast :message="uS.toastMessage" />
+  <Backdrop />
+
 </template>
 
 <style scoped>

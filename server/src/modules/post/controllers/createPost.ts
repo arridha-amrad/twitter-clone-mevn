@@ -23,7 +23,6 @@ const createPost = async (req: Request, res: Response) => {
         mediaURL.push(result.url);
       }
     }
-
     const newPost = await prisma.post.create({
       data: {
         body: postDescription,

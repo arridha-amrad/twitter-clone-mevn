@@ -55,11 +55,14 @@ const urls = computed(() => props.post.medias.map((m) => m.url))
 const props = defineProps<{
   post: IPostWithParents;
 }>();
+
 const date = computed(() => timeSetter(props.post.createdAt.toString()));
+
 const avatar = computed(() => {
   const url = props.post.author.imageURL;
   return url === "default" ? "/default.png" : url;
 });
+
 const router = useRouter();
 const navigate = (postId: string) => router.push(`/posts/${postId}`);
 </script>

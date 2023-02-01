@@ -2,7 +2,7 @@
   <form ref="postFormRef" @submit.prevent="submit">
     <div class="w-full border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-slate-700">
       <div class="bg-white rounded-t-lg dark:bg-gray-800">
-        <textarea v-model="body" id="comment" rows="4" class="
+        <textarea :disabled="isLoading" v-model="body" id="comment" rows="4" class="
           w-full rounded-lg border-0 bg-white px-3 text-sm text-gray-900 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-500 dark:bg-slate-800 dark:text-white dark:placeholder-gray-400 md:text-base
           " placeholder="Write a post..."></textarea>
       </div>
@@ -15,12 +15,7 @@
           </Spinner>
         </button>
         <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
-          <ul class="-space-x-3 flex">
-            <li v-for="(file, index) in filesToPreview" :key="index">
-              <img class="w-8 h-8 rounded-full border dark:border-gray-600 object-cover object-center" :src="file"
-                alt="avatar">
-            </li>
-          </ul>
+          <PreviewImages :files-to-preview="filesToPreview" />
           <input @input="fileInputChange" class="absolute hidden" multiple="true" type="file" ref="fileInputRef" />
           <button @click="fileInputRef?.click" type="button"
             class="inline-flex justify-center p-2 text-gray-500 rounded-full cursor-pointer hover:text-gray-900 hover:bg-slate-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
@@ -31,19 +26,18 @@
       </div>
     </div>
   </form>
-  <Toast :message="toastMessage" />
 </template>
 
 <script setup lang="ts">
-import Toast from "@/components/Toast.vue";
 import postStore from "@/stores/postStore";
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 import ImageIcon from "@heroicons/vue/24/outline/PhotoIcon"
 import Spinner from "@/components/Spinner.vue";
+import PreviewImages from "@/components/PreviewImages.vue";
+import uiStore from "@/stores/uiStore";
 
 const store = postStore();
 const isLoading = ref(false);
-const toastMessage = ref("");
 const body = ref("");
 const filesToPreview = ref<string[]>([])
 const filesToUpload = ref<File[]>([])
@@ -54,7 +48,6 @@ const fileInputChange = (e: any) => {
   filesToUpload.value = []
   const images = fileInputRef.value?.files
   if (!images) return
-  console.log("images : ", images);
   for (let i = 0; i < images.length; i++) {
     const url = URL.createObjectURL(images[i])
     const image = images[i]
@@ -66,13 +59,7 @@ const fileInputChange = (e: any) => {
 const postFormRef = ref<HTMLFormElement>();
 defineExpose({ postFormRef });
 
-watchEffect(() => {
-  if (toastMessage.value !== "") {
-    setTimeout(() => {
-      toastMessage.value = "";
-    }, 5000);
-  }
-});
+const uS = uiStore()
 
 const submit = async () => {
   const b = body.value;
@@ -83,12 +70,12 @@ const submit = async () => {
     formData.append("text", b)
     filesToUpload.value.map((file) => formData.append("images", file))
     await store.createPost(formData)
-    toastMessage.value = "new post created...";
     body.value = "";
     filesToPreview.value = []
     filesToUpload.value = []
     formData.delete("text")
     formData.delete("images")
+    uS.setToast("new post created")
   } catch (err) {
     console.log("err : ", err);
   } finally {

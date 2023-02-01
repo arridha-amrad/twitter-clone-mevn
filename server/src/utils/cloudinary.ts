@@ -24,3 +24,12 @@ export const upload = async (file: UploadedFile) => {
     throw error;
   }
 };
+
+export const deleteImage = async (url: string) => {
+  try {
+    const publicId = url.slice(url.lastIndexOf("twitter-clone")).split(".")[0];
+    await cloudinary.v2.uploader.destroy(publicId);
+  } catch (err) {
+    throw err;
+  }
+};

@@ -46,9 +46,10 @@ const closeModal = () => (isShowModal.value = false);
 
 const deletePost = async () => {
   try {
-    await store.deletePost(props.postId);
     closeModal();
-  } catch (err) { }
+    await store.deletePost(props.postId);
+  } catch (err) {
+  }
 };
 
 const menuRef = ref<HTMLUListElement>();

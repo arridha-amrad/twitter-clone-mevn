@@ -5,3 +5,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.post-list-move,
+.post-list-enter-active,
+.post-list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.post-list-enter-from {
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
+.post-list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.post-list-leave-active {
+  position: absolute;
+}

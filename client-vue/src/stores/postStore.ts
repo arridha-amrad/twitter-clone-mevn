@@ -5,6 +5,9 @@ import {
   IPostWithParents,
   IPostWithParentsAndChildren,
 } from "./types/post.types";
+import uiStore from "./uiStore";
+
+const uS = uiStore();
 
 const postStore = defineStore("post", {
   state: () => ({
@@ -21,7 +24,9 @@ const postStore = defineStore("post", {
     },
     async deletePost(postId: string) {
       try {
+        uS.setLoading();
         await axiosInstance.delete(`/posts/delete/${postId}`);
+        uS.setToast("post deleted");
         this.posts = this.posts.filter((post) => post.id !== postId);
         this.comments = this.comments.filter(
           (comment) => comment.id !== postId
@@ -29,6 +34,10 @@ const postStore = defineStore("post", {
         this.posts[0]._count.children--;
       } catch (err: any) {
         throw err.response;
+      } finally {
+        setTimeout(() => {
+          uS.unsetLoading();
+        }, 300);
       }
     },
     async getChildren(postId: string) {
