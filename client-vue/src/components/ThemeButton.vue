@@ -13,14 +13,18 @@ import Button from './Button.vue';
 import SunIcon from "@heroicons/vue/24/solid/SunIcon"
 import MoonIcon from "@heroicons/vue/24/solid/MoonIcon"
 import Tooltip from './Tooltip.vue';
+import uiStore from '@/stores/uiStore';
+const uS = uiStore()
 const changeTheme = () => {
   const theme = localStorage.getItem("theme")
   if (theme && theme === "dark") {
     localStorage.setItem("theme", "light")
     document.documentElement.classList.remove("dark")
+    uS.isDarkMode = false
   } else {
     localStorage.setItem("theme", "dark")
     document.documentElement.classList.add("dark")
+    uS.isDarkMode = true
   }
 }
 </script>

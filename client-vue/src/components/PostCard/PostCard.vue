@@ -15,7 +15,7 @@
         </div>
         <ParentPostAuthor :users="authors" />
         <p class="text-gray-500 dark:text-gray-300 sm:text-base text-sm">{{ post.body }}</p>
-        <PostCardCarousel :urls="urls" />
+        <PostCardCarousel ref="carouselRef" :urls="urls" />
         <div class="flex items-center w-3/4 justify-between gap-4 mt-5">
           <LikePostButton :post="post" />
           <RePostButton :post="post" />
@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import timeSetter from "@/utils/timeSetter";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { IPostWithParents } from "@/stores/types/post.types";
 import { useRouter } from "vue-router";
 import LikePostButton from "@/features/LikePostFeature.vue";
@@ -38,8 +38,26 @@ import authStore from "@/stores/authStore";
 import ParentPostAuthor from "./ParentPostAuthor.vue";
 import Avatar from "../Avatar.vue";
 import RePostButton from "@/features/RePostFeature.vue";
-
 import PostCardCarousel from "./PostCardCarousel.vue";
+
+const carouselRef = ref<InstanceType<typeof PostCardCarousel> | null>(null)
+
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    for (let i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting) {
+        const imageElement = entries[i].target.querySelector("img")
+        const url = imageElement?.getAttribute("data-source")
+        imageElement?.setAttribute("src", url!)
+      }
+    }
+  })
+  if (!carouselRef.value) return
+  if (carouselRef.value.postCardCarousel) {
+    observer.observe(carouselRef.value.postCardCarousel)
+  }
+})
+
 
 const userStore = authStore();
 

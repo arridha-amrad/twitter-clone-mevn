@@ -6,14 +6,17 @@ import uiStore from "./stores/uiStore"
 import Backdrop from './components/Backdrop.vue';
 
 const store = authStore()
+const uS = uiStore()
 
 const applyTheme = () => {
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     localStorage.setItem("theme", "dark")
     document.documentElement.classList.add("dark")
+    uS.isDarkMode = true
   } else {
     localStorage.setItem("theme", "light")
     document.documentElement.classList.remove("dark")
+    uS.isDarkMode = false
   }
 }
 
@@ -21,7 +24,6 @@ onMounted(() => {
   applyTheme()
 })
 
-const uS = uiStore()
 
 </script>
 

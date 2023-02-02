@@ -8,7 +8,7 @@
       </div>
       <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
         <button :disabled="isLoading" type="submit"
-          class="rounded-lg px-5 py-1.5 text-sm font-medium outline-none transition duration-200 ease-in focus:ring-4 md:text-base bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-400 disabled:bg-blue-400">
+          class="rounded-lg px-5 py-1.5 text-sm font-medium outline-none disabled:cursor-wait transition duration-200 ease-in focus:ring-4 md:text-base bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300  dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-400 disabled:bg-blue-400">
           <span v-if="!isLoading">Post</span>
           <Spinner v-else>
             <span>loading...</span>
@@ -17,11 +17,13 @@
         <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
           <PreviewImages :files-to-preview="filesToPreview" />
           <input @input="fileInputChange" class="absolute hidden" multiple="true" type="file" ref="fileInputRef" />
-          <button @click="fileInputRef?.click" type="button"
-            class="inline-flex justify-center p-2 text-gray-500 rounded-full cursor-pointer hover:text-gray-900 hover:bg-slate-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-            <ImageIcon class="w-5 h-5" />
-            <span class="sr-only">Upload image</span>
-          </button>
+          <Tooltip tip="add images">
+            <button :disabled="isLoading" @click="fileInputRef?.click" type="button"
+              class="inline-flex disabled:cursor-wait justify-center p-2 text-gray-500 rounded-full cursor-pointer hover:text-gray-900 hover:bg-slate-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+              <ImageIcon class="w-5 h-5" />
+              <span class="sr-only">Upload image</span>
+            </button>
+          </Tooltip>
         </div>
       </div>
     </div>
@@ -35,6 +37,7 @@ import ImageIcon from "@heroicons/vue/24/outline/PhotoIcon"
 import Spinner from "@/components/Spinner.vue";
 import PreviewImages from "@/components/PreviewImages.vue";
 import uiStore from "@/stores/uiStore";
+import Tooltip from "@/components/Tooltip.vue";
 
 const store = postStore();
 const isLoading = ref(false);

@@ -4,6 +4,7 @@ const uiStore = defineStore("ui", {
   state: () => ({
     toastMessage: "",
     isLoading: false,
+    isDarkMode: false,
   }),
   actions: {
     setToast(text: string) {

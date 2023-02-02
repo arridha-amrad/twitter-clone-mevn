@@ -1,4 +1,9 @@
 <template>
-  <img class="h-16 w-16 dark:block hidden" src="/logo-dark.svg" />
-  <img class="h-16 w-16 block dark:hidden" src="/logo-light.svg" />
+  <img ref="logoRef" class="h-16 w-16" :src="uS.isDarkMode ? '/logo-dark.svg' : '/logo-light.svg'" />
 </template>
+
+<script setup lang="ts">
+import uiStore from '@/stores/uiStore';
+const uS = uiStore()
+
+</script>

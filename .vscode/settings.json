@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["cloudinary", "fileupload", "pinia", "repost", "reposted"]
+  "cSpell.words": [
+    "cloudinary",
+    "fileupload",
+    "heroicons",
+    "pinia",
+    "repost",
+    "reposted",
+    "vueuse"
+  ]
 }
