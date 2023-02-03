@@ -1,50 +1,40 @@
 import { Request, Response } from "express";
 import prisma from "@/utils/prisma";
 import { POST_INCLUDED_DATA } from "../post.constants";
-import { IPostWithParents } from "../post.types";
+import { IPostWithParents, ITweet } from "../post.types";
 import { getPostParents } from "../utils/getPostParents";
+import { findLike } from "../services/likeServices";
+import { findRetweet } from "../services/tweetServices";
 
 const getPosts = async (req: Request, res: Response) => {
   const { limit = "0", skip = "0" } = req.query;
   try {
     const userId = req.app.locals.userId;
-    const posts = await prisma.post.findMany({
+    const storedTweets = await prisma.tweet.findMany({
       take: parseInt(limit as string),
       skip: parseInt(skip as string),
       orderBy: {
         createdAt: "desc",
       },
-      include: POST_INCLUDED_DATA,
     });
-    const myPosts: IPostWithParents[] = [];
-    for (const post of posts) {
+    const tweets: ITweet[] = [];
+    for (let tweet of storedTweets) {
+      const storedPost = await prisma.post.findFirst({
+        where: { id: tweet.postId },
+        include: POST_INCLUDED_DATA,
+      });
+      if (!storedPost) continue;
       let currentPost: IPostWithParents = {
-        ...post,
+        ...storedPost,
         isLiked: false,
-        isReposted: false,
+        isRetweet: false,
         parents: [],
-        medias: [],
       };
-      const isLiked = await prisma.like.findFirst({
-        where: {
-          postId: post.id,
-          userId,
-        },
-      });
-      const isReposted = await prisma.repost.findFirst({
-        where: {
-          postId: post.id,
-          userId,
-        },
-      });
-      const medias = await prisma.media.findMany({
-        where: {
-          postId: post.id,
-        },
-      });
-      currentPost.medias = medias;
-      currentPost.isLiked = !!isLiked;
-      currentPost.isReposted = !!isReposted;
+      currentPost.isLiked = !!(await findLike(tweet.postId, userId));
+      const reTweet = await findRetweet(tweet.postId, userId);
+      if (reTweet && reTweet.userId !== currentPost.authorId) {
+        currentPost.isRetweet = true;
+      }
       if (currentPost.parentId) {
         const postParents = await getPostParents(
           currentPost.parentId,
@@ -53,9 +43,11 @@ const getPosts = async (req: Request, res: Response) => {
         );
         currentPost.parents = postParents;
       }
-      myPosts.push(currentPost);
+      const myTweet: ITweet = { ...tweet, post: currentPost };
+      console.log(JSON.stringify(tweet, null, 2));
+      tweets.push(myTweet);
     }
-    return res.status(200).json({ posts: myPosts });
+    return res.status(200).json({ tweets });
   } catch (err) {
     console.log("err : ", err);
     return res.status(500).send("Server Error");

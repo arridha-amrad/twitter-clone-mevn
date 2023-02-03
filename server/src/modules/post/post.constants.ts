@@ -17,10 +17,10 @@ export const POST_INCLUDED_DATA = {
       children: true,
       likes: true,
       medias: true,
-      reposts: true,
+      tweets: true,
     },
   },
-  medias: QUERY_MEDIAS,
+  medias: true,
   author: {
     select: QUERY_AUTHOR_DATA,
   },

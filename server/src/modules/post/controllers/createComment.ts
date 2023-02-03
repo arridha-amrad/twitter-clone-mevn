@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import prisma from "@/utils/prisma";
 import { POST_INCLUDED_DATA } from "../post.constants";
 import { getPostParents } from "../utils/getPostParents";
-import { IPostWithParents } from "../post.types";
+import { IPostWithParents, ITweet } from "../post.types";
 
 const createComment = async (req: Request, res: Response) => {
   const { body, postId } = req.body;
@@ -25,10 +25,18 @@ const createComment = async (req: Request, res: Response) => {
     const comment: IPostWithParents = {
       ...newPost,
       isLiked: false,
+      isRetweet: false,
       parents,
       medias: [],
     };
-    return res.status(201).json({ comment });
+    const newTweet = await prisma.tweet.create({
+      data: {
+        postId: newPost.id,
+        userId,
+      },
+    });
+    const tweet: ITweet = { ...newTweet, post: comment };
+    return res.status(201).json({ tweet });
   } catch (error) {
     console.log(error);
     return res.status(500).send("Server Error");

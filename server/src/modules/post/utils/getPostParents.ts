@@ -1,6 +1,8 @@
 import { IPost } from "../post.types";
 import prisma from "@/utils/prisma";
 import { POST_INCLUDED_DATA } from "../post.constants";
+import { findLike } from "../services/likeServices";
+import { findRetweet } from "../services/tweetServices";
 
 export const getPostParents = async (
   postId: string,
@@ -14,13 +16,13 @@ export const getPostParents = async (
     include: POST_INCLUDED_DATA,
   });
   if (!post) return parents;
-  const isLiked = await prisma.like.findFirst({
-    where: {
-      postId: post.id,
-      userId,
-    },
-  });
-  const postResult: IPost = { ...post, isLiked: !!isLiked, medias: [] };
+  const isLiked = await findLike(postId, userId);
+  const isRetweet = await findRetweet(postId, userId);
+  const postResult: IPost = {
+    ...post,
+    isLiked: !!isLiked,
+    isRetweet: !!isRetweet,
+  };
   parents.push(postResult);
 
   if (post.parentId === null) return parents;

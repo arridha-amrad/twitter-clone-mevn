@@ -21,7 +21,7 @@ model User {
   tokens    Token[]
   likes     Like[]
   posts     Post[]   @relation("WrittenPosts")
-  reposts   Repost[]
+  tweets    Tweet[]
 
   @@map("users")
 }
@@ -60,12 +60,12 @@ model Post {
   children  Post[]   @relation("ParentChild")
   likes     Like[]
   medias    Media[]
-  reposts   Repost[]
+  tweets    Tweet[]
 
   @@map("posts")
 }
 
-model Repost {
+model Tweet {
   id        String   @id @default(cuid())
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -74,7 +74,7 @@ model Repost {
   postId    String
   userId    String
 
-  @@map("reposts")
+  @@map("tweets")
 }
 
 model Media {

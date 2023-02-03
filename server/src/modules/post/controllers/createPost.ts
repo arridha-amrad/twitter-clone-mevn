@@ -53,11 +53,23 @@ const createPost = async (req: Request, res: Response) => {
       ...newPost,
       medias: newPostMedias,
       isLiked: false,
-      isReposted: false,
+      isRetweet: false,
       parents: [],
     };
 
-    return res.status(201).json({ post });
+    const newTweet = await prisma.tweet.create({
+      data: {
+        postId: newPost.id,
+        userId,
+      },
+      include: {
+        post: true,
+      },
+    });
+
+    newTweet.post = post;
+
+    return res.status(201).json({ tweet: newTweet });
   } catch (err) {
     console.log("err : ", err);
     return res.sendStatus(500);

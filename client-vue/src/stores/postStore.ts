@@ -96,9 +96,11 @@ const postStore = defineStore("post", {
         const { data } = await axiosInstance.get(
           `/posts?limit=${7}&skip=${this.posts.length}`
         );
-        const result = data.posts as IPostWithParentsAndChildren[];
-        const oldPosts = this.posts;
-        this.posts = [...oldPosts, ...result];
+        console.log("data : ", data);
+
+        // const result = data.posts as IPostWithParentsAndChildren[];
+        // const oldPosts = this.posts;
+        // this.posts = [...oldPosts, ...result];
       } catch (err: any) {
         throw err.response;
       }
@@ -109,7 +111,9 @@ const postStore = defineStore("post", {
           "/posts/create-post",
           formData
         );
-        this.posts.splice(0, 0, data.post);
+        console.log("data : ", data);
+
+        // this.posts.splice(0, 0, data.post);
       } catch (err: any) {
         throw err.response;
       }

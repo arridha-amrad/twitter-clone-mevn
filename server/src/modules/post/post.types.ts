@@ -1,20 +1,26 @@
-export type IPost = Post & {
-  author: IAuthor;
-  medias: Media[];
-  _count: IPostCount;
-  isLiked: boolean;
-  isReposted: boolean;
+import { Media, Post, Tweet } from "@prisma/client";
+
+export type ITweet = Tweet & {
+  post: IPostWithParents;
 };
 
 export type IPostWithParents = IPost & {
   parents: IPost[];
 };
 
+export type IPost = Post & {
+  author: IAuthor;
+  medias: Media[];
+  _count: IPostCount;
+  isLiked: boolean;
+  isRetweet: boolean;
+};
+
 export interface IPostCount {
   children: number;
   likes: number;
   medias: number;
-  reposts: number;
+  tweets: number;
 }
 
 export interface IAuthor {
@@ -23,20 +29,3 @@ export interface IAuthor {
   username: string;
   imageURL: string;
 }
-
-export type Post = {
-  id: string;
-  body: string;
-  authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  parentId: string | null;
-};
-
-export type Media = {
-  id: string;
-  url: string;
-  postId: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
