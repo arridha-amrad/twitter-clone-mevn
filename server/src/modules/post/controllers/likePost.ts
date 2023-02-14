@@ -2,9 +2,8 @@ import { Request, Response } from "express";
 import prisma from "@/utils/prisma";
 import { Like } from "@prisma/client";
 
-const likePost = async (req: Request, res: Response) => {
+const like = async (req: Request, res: Response) => {
   const { postId } = req.body;
-
   try {
     const userId = req.app.locals.userId;
     let likePost: Like | null;
@@ -42,4 +41,4 @@ const likePost = async (req: Request, res: Response) => {
   }
 };
 
-export default likePost;
+export default like;

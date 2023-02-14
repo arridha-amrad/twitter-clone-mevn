@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 
 import prisma from "@/utils/prisma";
 import { POST_INCLUDED_DATA } from "../post.constants";
-import { IPostWithParents } from "../post.types";
+import { IPostWithParents, ITweet } from "../post.types";
 import { upload } from "@/utils/cloudinary";
 import { Media } from "@prisma/client";
+import { createTweet } from "../services/tweetServices";
 
 const createPost = async (req: Request, res: Response) => {
   const postDescription = req.body.text;
@@ -57,17 +58,9 @@ const createPost = async (req: Request, res: Response) => {
       parents: [],
     };
 
-    const newTweet = await prisma.tweet.create({
-      data: {
-        postId: newPost.id,
-        userId,
-      },
-      include: {
-        post: true,
-      },
-    });
+    const tweet = await createTweet(post.id, userId);
 
-    newTweet.post = post;
+    const newTweet: ITweet = { ...tweet, post };
 
     return res.status(201).json({ tweet: newTweet });
   } catch (err) {

@@ -1,8 +1,8 @@
 <template>
   <div class="relative">
     <TransitionGroup tag="ul" name="post-list" :css="false">
-      <li v-for="(post) in store.posts" :key="post.id">
-        <PostCard class="mt-4" :post="post" />
+      <li v-for="(tweet) in store.tweets" :key="tweet.id">
+        <PostCard class="mt-4" :post="tweet.post" />
       </li>
     </TransitionGroup>
   </div>

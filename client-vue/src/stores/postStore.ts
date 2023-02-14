@@ -3,7 +3,8 @@ import { defineStore } from "pinia";
 import {
   CreateCommentDTO,
   IPostWithParents,
-  IPostWithParentsAndChildren,
+  ITweet,
+  Tweet,
 } from "./types/post.types";
 import uiStore from "./uiStore";
 
@@ -11,13 +12,30 @@ const uS = uiStore();
 
 const postStore = defineStore("post", {
   state: () => ({
-    posts: [] as IPostWithParentsAndChildren[],
+    tweets: [] as Tweet[],
     comments: [] as IPostWithParents[],
   }),
   actions: {
     async repost(postId: string) {
       try {
-        await axiosInstance.post(`/posts/repost/${postId}`);
+        const { data } = await axiosInstance.post<{
+          message: string;
+          tweet: ITweet;
+        }>(`/posts/repost/${postId}`);
+        const tweet = this.tweets.find((tweet) => tweet.postId === postId);
+        if (!tweet) return;
+        if (data.message === "reTweet") {
+          tweet.post.isRetweet = true;
+          tweet.post._count.tweets++;
+          const newTweet: Tweet = { ...data.tweet, post: tweet.post };
+          this.tweets.splice(0, 0, newTweet);
+        } else {
+          tweet.post.isRetweet = false;
+          tweet.post._count.tweets--;
+          this.tweets = this.tweets.filter((tweet) => {
+            tweet.id !== data.tweet.id;
+          });
+        }
       } catch (err: any) {
         throw err.response;
       }
@@ -27,11 +45,11 @@ const postStore = defineStore("post", {
         uS.setLoading();
         await axiosInstance.delete(`/posts/delete/${postId}`);
         uS.setToast("post deleted");
-        this.posts = this.posts.filter((post) => post.id !== postId);
+        this.tweets = this.tweets.filter((tweet) => tweet.postId !== postId);
         this.comments = this.comments.filter(
           (comment) => comment.id !== postId
         );
-        this.posts[0]._count.children--;
+        this.tweets[0].post._count.children--;
       } catch (err: any) {
         throw err.response;
       } finally {
@@ -51,8 +69,8 @@ const postStore = defineStore("post", {
     async getOnePost(postId: string) {
       try {
         const { data } = await axiosInstance.get(`/posts/detail/${postId}`);
-        this.posts = [];
-        this.posts.push(data.post);
+        this.tweets = [];
+        this.tweets.push(data.tweet);
         this.comments = data.post.children;
       } catch (err: any) {
         throw err.response;
@@ -64,7 +82,7 @@ const postStore = defineStore("post", {
       isComment = false
     ) {
       try {
-        const { data } = await axiosInstance.post(
+        const { data } = await axiosInstance.post<{ tweet: Tweet }>(
           "/posts/create-comment",
           body
         );
@@ -77,15 +95,17 @@ const postStore = defineStore("post", {
               comment._count.children++;
             }
           } else {
-            const { parents, ...rest } = data.comment;
-            this.comments.splice(0, 0, rest);
-            this.posts[0]._count.children++;
+            // const { parents, ...rest } = data.comment;
+            this.comments.splice(0, 0, data.tweet.post);
+            this.tweets[0].post._count.children++;
           }
         } else {
-          const post = this.posts.find((post) => post.id === body.postId);
-          if (!post) return;
-          post._count.children++;
-          this.posts.splice(0, 0, data.comment);
+          const tweet = this.tweets.find(
+            (tweet) => tweet.postId === body.postId
+          );
+          if (!tweet) return;
+          tweet.post._count.children++;
+          this.tweets.splice(0, 0, data.tweet);
         }
       } catch (err: any) {
         throw err.response;
@@ -93,27 +113,22 @@ const postStore = defineStore("post", {
     },
     async getPosts() {
       try {
-        const { data } = await axiosInstance.get(
-          `/posts?limit=${7}&skip=${this.posts.length}`
+        const { data } = await axiosInstance.get<{ tweets: Tweet[] }>(
+          `/posts?limit=${7}&skip=${this.tweets.length}`
         );
-        console.log("data : ", data);
-
-        // const result = data.posts as IPostWithParentsAndChildren[];
-        // const oldPosts = this.posts;
-        // this.posts = [...oldPosts, ...result];
+        const result = data.tweets as Tweet[];
+        this.tweets = [...this.tweets, ...result];
       } catch (err: any) {
         throw err.response;
       }
     },
     async createPost(formData: FormData) {
       try {
-        const { data } = await axiosInstance.post(
+        const { data } = await axiosInstance.post<{ tweet: Tweet }>(
           "/posts/create-post",
           formData
         );
-        console.log("data : ", data);
-
-        // this.posts.splice(0, 0, data.post);
+        this.tweets.splice(0, 0, data.tweet);
       } catch (err: any) {
         throw err.response;
       }

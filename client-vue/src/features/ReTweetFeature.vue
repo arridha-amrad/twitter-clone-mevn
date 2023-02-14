@@ -18,10 +18,13 @@ import { IPost } from "@/stores/types/post.types";
 import Icon from "@heroicons/vue/24/outline/ArrowPathRoundedSquareIcon"
 import { reactive } from "vue";
 const props = defineProps<{ post: IPost }>()
+
 const repostObj = reactive({
-  isRepost: props.post.isReposted,
-  total: props.post._count.reposts
+  isRepost: props.post.isRetweet,
+  // 1 tweet means that tweet created by original author
+  total: props.post._count.tweets - 1
 })
+
 const store = postStore()
 const repost = async () => {
   try {

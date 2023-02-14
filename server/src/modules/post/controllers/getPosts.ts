@@ -4,7 +4,7 @@ import { POST_INCLUDED_DATA } from "../post.constants";
 import { IPostWithParents, ITweet } from "../post.types";
 import { getPostParents } from "../utils/getPostParents";
 import { findLike } from "../services/likeServices";
-import { findRetweet } from "../services/tweetServices";
+import { findTweet } from "../services/tweetServices";
 
 const getPosts = async (req: Request, res: Response) => {
   const { limit = "0", skip = "0" } = req.query;
@@ -31,20 +31,15 @@ const getPosts = async (req: Request, res: Response) => {
         parents: [],
       };
       currentPost.isLiked = !!(await findLike(tweet.postId, userId));
-      const reTweet = await findRetweet(tweet.postId, userId);
+      const reTweet = await findTweet(tweet.postId, userId);
       if (reTweet && reTweet.userId !== currentPost.authorId) {
         currentPost.isRetweet = true;
       }
       if (currentPost.parentId) {
-        const postParents = await getPostParents(
-          currentPost.parentId,
-          userId,
-          currentPost.parents
-        );
+        const postParents = await getPostParents(currentPost.parentId, userId);
         currentPost.parents = postParents;
       }
       const myTweet: ITweet = { ...tweet, post: currentPost };
-      console.log(JSON.stringify(tweet, null, 2));
       tweets.push(myTweet);
     }
     return res.status(200).json({ tweets });

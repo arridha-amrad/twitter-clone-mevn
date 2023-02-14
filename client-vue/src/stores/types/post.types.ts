@@ -1,9 +1,19 @@
+export type Tweet = ITweet & { post: IPostWithParents };
+
+export type ITweet = {
+  id: string;
+  postId: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type IPost = Post & {
   author: IAuthor;
   medias: Media[];
   _count: IPostCount;
   isLiked: boolean;
-  isReposted: boolean;
+  isRetweet: boolean;
 };
 
 export type IPostWithParents = IPost & {
@@ -18,7 +28,7 @@ export interface IPostCount {
   children: number;
   likes: number;
   medias: number;
-  reposts: number;
+  tweets: number;
 }
 
 export interface IAuthor {

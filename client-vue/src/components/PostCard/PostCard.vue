@@ -37,7 +37,7 @@ import PostMenu from "./PostCardMenu.vue";
 import authStore from "@/stores/authStore";
 import ParentPostAuthor from "./ParentPostAuthor.vue";
 import Avatar from "../Avatar.vue";
-import RePostButton from "@/features/RePostFeature.vue";
+import RePostButton from "@/features/ReTweetFeature.vue";
 import PostCardCarousel from "./PostCardCarousel.vue";
 
 const carouselRef = ref<InstanceType<typeof PostCardCarousel> | null>(null)

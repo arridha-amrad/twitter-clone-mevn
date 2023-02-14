@@ -51,12 +51,12 @@ import { computed, onUnmounted, provide, ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import Comments from "./Comments.vue";
 import CountLabel from "@/components/CountLabel.vue";
-import RePostFeature from "@/features/RePostFeature.vue";
+import RePostFeature from "@/features/ReTweetFeature.vue";
 
 provide("isComment", false);
 
 onUnmounted(() => {
-  store.posts = [];
+  store.tweets = [];
 });
 
 const store = postStore();
@@ -64,7 +64,7 @@ const router = useRouter();
 const inputRef = ref<InstanceType<typeof CreateCommentFeature> | null>(null);
 const isLoading = ref(true);
 const postId = computed(() => router.currentRoute.value.params.id as string);
-const postDetail = computed(() => store.posts[0]);
+const postDetail = computed(() => store.tweets[0].post);
 const comments = computed(() => store.comments);
 
 const findPost = async () => {
