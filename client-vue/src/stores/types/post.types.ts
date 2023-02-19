@@ -4,6 +4,7 @@ export type ITweet = {
   id: string;
   postId: string;
   userId: string;
+  isRetweet: boolean;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -7,7 +7,7 @@ import likePost from "./controllers/likePost";
 import getOnePost from "./controllers/getOnePost";
 import getPostChildren from "./controllers/getPostChildren";
 import deletePost from "./controllers/deletePost";
-import repost from "./controllers/repost";
+import retweet from "./controllers/retweet";
 
 const router = express.Router();
 
@@ -18,6 +18,6 @@ router.get("/detail/:postId", verifyAuthToken, getOnePost);
 router.get("/children/:postId", verifyAuthToken, getPostChildren);
 router.get("/", verifyAuthToken, getPosts);
 router.delete("/delete/:postId", verifyAuthToken, deletePost);
-router.post("/repost/:postId", verifyAuthToken, repost);
+router.post("/retweet", verifyAuthToken, retweet);
 
 export default router;

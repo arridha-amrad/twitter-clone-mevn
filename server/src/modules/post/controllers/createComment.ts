@@ -30,7 +30,7 @@ const createComment = async (req: Request, res: Response) => {
       parents,
       medias: [],
     };
-    const newTweet = await createTweet(newPost.id, userId);
+    const newTweet = await createTweet(false, newPost.id, userId);
     const tweet: ITweet = { ...newTweet, post: comment };
     return res.status(201).json({ tweet });
   } catch (error) {

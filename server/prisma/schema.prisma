@@ -73,6 +73,7 @@ model Tweet {
   updatedAt DateTime @updatedAt
   postId    String
   userId    String
+  isRetweet Boolean  @default(false)
 
   @@map("tweets")
 }

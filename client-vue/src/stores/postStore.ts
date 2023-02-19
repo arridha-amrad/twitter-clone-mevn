@@ -2,6 +2,7 @@ import axiosInstance from "@/utils/axiosInterceptor";
 import { defineStore } from "pinia";
 import {
   CreateCommentDTO,
+  IPost,
   IPostWithParents,
   ITweet,
   Tweet,
@@ -16,25 +17,27 @@ const postStore = defineStore("post", {
     comments: [] as IPostWithParents[],
   }),
   actions: {
-    async repost(postId: string) {
+    async repost(postId: string, isRetweet: boolean) {
       try {
         const { data } = await axiosInstance.post<{
-          message: string;
           tweet: ITweet;
-        }>(`/posts/repost/${postId}`);
-        const tweet = this.tweets.find((tweet) => tweet.postId === postId);
+        }>("/posts/retweet", {
+          postId,
+          isRetweet,
+        });
+        const tweet = this.tweets.find(
+          (tweet) => tweet.postId === postId && !tweet.isRetweet
+        );
         if (!tweet) return;
-        if (data.message === "reTweet") {
+        if (!isRetweet) {
           tweet.post.isRetweet = true;
           tweet.post._count.tweets++;
-          const newTweet: Tweet = { ...data.tweet, post: tweet.post };
+          const newTweet: Tweet = { ...data.tweet!, post: tweet.post };
           this.tweets.splice(0, 0, newTweet);
         } else {
           tweet.post.isRetweet = false;
           tweet.post._count.tweets--;
-          this.tweets = this.tweets.filter((tweet) => {
-            tweet.id !== data.tweet.id;
-          });
+          this.tweets = this.tweets.filter((t) => t.id !== data.tweet.id);
         }
       } catch (err: any) {
         throw err.response;

@@ -24,11 +24,16 @@ export const checkIsReTweet = (
   );
 };
 
-export const createTweet = async (postId: string, userId: string) => {
+export const createTweet = async (
+  isRetweet: boolean,
+  postId: string,
+  userId: string
+) => {
   return prisma.tweet.create({
     data: {
       postId,
       userId,
+      isRetweet,
     },
   });
 };

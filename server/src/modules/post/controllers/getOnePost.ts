@@ -28,7 +28,7 @@ const getOnePost = async (req: Request, res: Response) => {
     if (!storedPost) return res.status(404).json({ message: "post not found" });
 
     if (storedPost.parentId) {
-      const postParents = await getPostParents(storedPost.parentId, userId, []);
+      const postParents = await getPostParents(storedPost.parentId, userId);
       // @ts-ignore
       storedPost["parents"] = postParents;
     }

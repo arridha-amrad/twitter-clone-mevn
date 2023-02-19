@@ -2,6 +2,10 @@
   <article @click="navigate(post.id)"
     class="w-full h-fit box-border rounded-lg border-0 bg-white hover:bg-gray-50 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:bg-opacity-50 md:px-4 md:py-3 px-3 py-1.5"
     role="button">
+    <div v-show="post.isRetweet" class="px-2 inline-flex gap-2 ml-9">
+      <Icon class="w-4 h-4 text-gray-500 dark:text-slate-300" />
+      <span class="font-bold text-gray-500 dark:text-slate-300 text-xs sm:text-sm">You Retweeted</span>
+    </div>
     <div class="flex sm:gap-4 gap-2">
       <Avatar :url="avatar" />
       <div id="post-content" class="flex-1">
@@ -39,6 +43,8 @@ import ParentPostAuthor from "./ParentPostAuthor.vue";
 import Avatar from "../Avatar.vue";
 import RePostButton from "@/features/ReTweetFeature.vue";
 import PostCardCarousel from "./PostCardCarousel.vue";
+import Icon from "@heroicons/vue/24/outline/ArrowPathRoundedSquareIcon"
+
 
 const carouselRef = ref<InstanceType<typeof PostCardCarousel> | null>(null)
 

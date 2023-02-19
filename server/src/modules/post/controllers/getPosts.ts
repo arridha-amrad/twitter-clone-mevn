@@ -31,10 +31,17 @@ const getPosts = async (req: Request, res: Response) => {
         parents: [],
       };
       currentPost.isLiked = !!(await findLike(tweet.postId, userId));
-      const reTweet = await findTweet(tweet.postId, userId);
-      if (reTweet && reTweet.userId !== currentPost.authorId) {
-        currentPost.isRetweet = true;
-      }
+
+      const isRetweet = await prisma.tweet.findFirst({
+        where: {
+          postId: tweet.postId,
+          userId: userId,
+          isRetweet: true,
+        },
+      });
+
+      currentPost.isRetweet = !!isRetweet;
+
       if (currentPost.parentId) {
         const postParents = await getPostParents(currentPost.parentId, userId);
         currentPost.parents = postParents;

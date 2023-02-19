@@ -1,5 +1,5 @@
 <template>
-  <Tooltip class="group" tip="Repost">
+  <Tooltip class="group" :tip="repostObj.isRepost ? 'unRetweet' : 'Retweet'">
     <button class="flex relative items-center gap-1 sm:text-sm text-xs font-medium" @click.stop="repost">
       <span>
         <Icon v-if="repostObj.isRepost" class="w-5 h-5 text-green-500 dark:text-green-600" />
@@ -28,7 +28,7 @@ const repostObj = reactive({
 const store = postStore()
 const repost = async () => {
   try {
-    await store.repost(props.post.id)
+    await store.repost(props.post.id, repostObj.isRepost)
     if (repostObj.isRepost) {
       repostObj.total--
       repostObj.isRepost = false
