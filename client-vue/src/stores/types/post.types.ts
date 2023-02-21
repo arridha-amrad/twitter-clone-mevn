@@ -1,3 +1,5 @@
+export type TweetWithPostChildren = ITweet & {post: IPostWithParentsAndChildren}
+
 export type Tweet = ITweet & { post: IPostWithParents };
 
 export type ITweet = {
@@ -5,6 +7,7 @@ export type ITweet = {
   postId: string;
   userId: string;
   isRetweet: boolean;
+  user: IAuthor;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/create-post", verifyAuthToken, createPost);
 router.post("/like-post", verifyAuthToken, likePost);
 router.post("/create-comment", verifyAuthToken, createComment);
-router.get("/detail/:postId", verifyAuthToken, getOnePost);
+router.get("/detail/:tweetId", verifyAuthToken, getOnePost);
 router.get("/children/:postId", verifyAuthToken, getPostChildren);
 router.get("/", verifyAuthToken, getPosts);
 router.delete("/delete/:postId", verifyAuthToken, deletePost);

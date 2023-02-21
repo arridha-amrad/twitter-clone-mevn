@@ -9,7 +9,7 @@
           <div v-if="isLoading" class="flex items-center justify-center">
             <Spinner />
           </div>
-          <div v-else>
+          <!-- <div v-else>
             <Alert type="error" message="Post not found" v-if="postDetail === null" />
             <div v-else class="border rounded-lg dark:border-0">
               <SimplePostCard :post="postDetail!" />
@@ -25,7 +25,7 @@
               <CreateCommentFeature ref="inputRef" :is-detail-page="true" :post-id="postDetail!.id" />
             </div>
             <Comments :comments="comments" />
-          </div>
+          </div> -->
         </LayoutCenter>
         <LayoutRight>
           <SearchInput />
@@ -63,17 +63,17 @@ const store = postStore();
 const router = useRouter();
 const inputRef = ref<InstanceType<typeof CreateCommentFeature> | null>(null);
 const isLoading = ref(true);
-const postId = computed(() => router.currentRoute.value.params.id as string);
+const tweetId = computed(() => router.currentRoute.value.params.id as string);
 const postDetail = computed(() => store.tweets[0].post);
 const comments = computed(() => store.comments);
 
 const findPost = async () => {
   try {
-    await store.getOnePost(postId.value);
+    await store.getOnePost(tweetId.value);
     setTimeout(() => (isLoading.value = false), 300);
   } catch (err) {
     console.log("err : ", err);
-    router.push("/");
+    // router.push("/");
   }
 };
 

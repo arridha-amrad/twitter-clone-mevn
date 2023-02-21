@@ -1,29 +1,28 @@
 <template>
-  <article @click="navigate(post.id)"
+  <article @click="navigate(tweet.id)"
     class="w-full h-fit box-border rounded-lg border-0 bg-white hover:bg-gray-50 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:bg-opacity-50 md:px-4 md:py-3 px-3 py-1.5"
     role="button">
-    <div v-show="post.isRetweet" class="px-2 inline-flex gap-2 ml-9">
-      <Icon class="w-4 h-4 text-gray-500 dark:text-slate-300" />
-      <span class="font-bold text-gray-500 dark:text-slate-300 text-xs sm:text-sm">You Retweeted</span>
-    </div>
+    <RetweetTag :tweet="tweet" />
     <div class="flex sm:gap-4 gap-2">
       <Avatar :url="avatar" />
       <div id="post-content" class="flex-1">
         <div class="flex items-center justify-start gap-2">
           <h1 class="text-sm font-bold md:text-base">
-            {{ post.author.username }}
+            {{ author.username }}
           </h1>
           <span class="text-secondary">&bull;</span>
           <div class="text-sm flex-1">{{ date }}</div>
-          <PostMenu v-show="isMyPost" :post-id="post.id" />
+          <PostMenu v-show="isMyPost" :post-id="id" />
         </div>
-        <ParentPostAuthor :users="authors" />
-        <p class="text-gray-500 dark:text-gray-300 sm:text-base text-sm">{{ post.body }}</p>
+        <ParentPostAuthor :users="parentPostsAuthor" />
+        <p class="text-gray-500 dark:text-gray-300 sm:text-base text-sm">
+          {{ body }}
+        </p>
         <PostCardCarousel ref="carouselRef" :urls="urls" />
         <div class="flex items-center w-3/4 justify-between gap-4 mt-5">
-          <LikePostButton :post="post" />
-          <RePostButton :post="post" />
-          <CommentButton :post="post" />
+          <LikePostButton :tweet="tweet" />
+          <RetweetButton :post="tweet.post" />
+          <CommentButton :post="tweet.post" />
         </div>
       </div>
     </div>
@@ -32,8 +31,8 @@
 
 <script setup lang="ts">
 import timeSetter from "@/utils/timeSetter";
-import { computed, onMounted, ref } from "vue";
-import { IPostWithParents } from "@/stores/types/post.types";
+import { computed, toRefs } from "vue";
+import { Tweet } from "@/stores/types/post.types";
 import { useRouter } from "vue-router";
 import LikePostButton from "@/features/LikePostFeature.vue";
 import CommentButton from "../CommentButton.vue";
@@ -41,53 +40,32 @@ import PostMenu from "./PostCardMenu.vue";
 import authStore from "@/stores/authStore";
 import ParentPostAuthor from "./ParentPostAuthor.vue";
 import Avatar from "../Avatar.vue";
-import RePostButton from "@/features/ReTweetFeature.vue";
+import RetweetButton from "@/features/ReTweetFeature.vue";
 import PostCardCarousel from "./PostCardCarousel.vue";
-import Icon from "@heroicons/vue/24/outline/ArrowPathRoundedSquareIcon"
+import RetweetTag from "./RetweetTag.vue";
 
+const props = defineProps<{ tweet: Tweet }>();
 
-const carouselRef = ref<InstanceType<typeof PostCardCarousel> | null>(null)
-
-onMounted(() => {
-  const observer = new IntersectionObserver((entries) => {
-    for (let i = 0; i < entries.length; i++) {
-      if (entries[i].isIntersecting) {
-        const imageElement = entries[i].target.querySelector("img")
-        const url = imageElement?.getAttribute("data-source")
-        imageElement?.setAttribute("src", url!)
-      }
-    }
-  })
-  if (!carouselRef.value) return
-  if (carouselRef.value.postCardCarousel) {
-    observer.observe(carouselRef.value.postCardCarousel)
-  }
-})
-
+const { createdAt, medias, author, parents, id, isRetweet, body } = toRefs(
+  props.tweet.post
+);
 
 const userStore = authStore();
 
-const isMyPost = computed(() => userStore.user?.id === props.post.author.id);
+const isMyPost = computed(() => userStore.user?.id === author.value.id);
 
-const parents = computed(() => props.post.parents ?? []);
-
-const authors = computed(
-  () => new Set(parents.value.map((user) => user.author.username))
+const parentPostsAuthor = computed(
+  () => new Set(props.tweet.post.parents.map((user) => user.author.username))
 );
 
-const urls = computed(() => props.post.medias.map((m) => m.url))
+const urls = computed(() => medias.value.map((m) => m.url));
 
-const props = defineProps<{
-  post: IPostWithParents;
-}>();
-
-const date = computed(() => timeSetter(props.post.createdAt.toString()));
+const date = computed(() => timeSetter(createdAt.value.toString()));
 
 const avatar = computed(() => {
-  const url = props.post.author.imageURL;
+  const url = author.value.imageURL;
   return url === "default" ? "/default.png" : url;
 });
-
 const router = useRouter();
 const navigate = (postId: string) => router.push(`/posts/${postId}`);
 </script>

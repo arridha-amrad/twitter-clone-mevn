@@ -1,5 +1,9 @@
 import { Media, Post, Tweet } from "@prisma/client";
 
+export type IPostWithParentsAndChildren = IPostWithParents & {
+  children: IPostWithParents[]
+}
+
 export type ITweet = Tweet & {
   post: IPostWithParents;
 };

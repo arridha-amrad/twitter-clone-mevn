@@ -2,7 +2,6 @@ import axiosInstance from "@/utils/axiosInterceptor";
 import { defineStore } from "pinia";
 import {
   CreateCommentDTO,
-  IPost,
   IPostWithParents,
   ITweet,
   Tweet,
@@ -61,6 +60,7 @@ const postStore = defineStore("post", {
         }, 300);
       }
     },
+
     async getChildren(postId: string) {
       try {
         const { data } = await axiosInstance.get(`/posts/children/${postId}`);
@@ -69,6 +69,7 @@ const postStore = defineStore("post", {
         throw err.response;
       }
     },
+
     async getOnePost(postId: string) {
       try {
         const { data } = await axiosInstance.get(`/posts/detail/${postId}`);
@@ -79,6 +80,7 @@ const postStore = defineStore("post", {
         throw err.response;
       }
     },
+
     async createComment(
       body: CreateCommentDTO,
       isFromDetailPage = false,
@@ -114,6 +116,7 @@ const postStore = defineStore("post", {
         throw err.response;
       }
     },
+
     async getPosts() {
       try {
         const { data } = await axiosInstance.get<{ tweets: Tweet[] }>(
@@ -125,6 +128,7 @@ const postStore = defineStore("post", {
         throw err.response;
       }
     },
+
     async createPost(formData: FormData) {
       try {
         const { data } = await axiosInstance.post<{ tweet: Tweet }>(
@@ -136,12 +140,21 @@ const postStore = defineStore("post", {
         throw err.response;
       }
     },
-    async likePost(postId: string) {
+
+    async likePost(tweetId: string, postId: string) {
       try {
         const { data } = await axiosInstance.post("/posts/like-post", {
           postId,
         });
-        return data.message === "like";
+        const tweet = this.tweets.find((t) => t.id === tweetId);
+        if (!tweet) return;
+        if (data.message === "like") {
+          tweet.post.isLiked = true;
+          tweet.post._count.likes++;
+        } else {
+          tweet.post.isLiked = false;
+          tweet.post._count.likes--;
+        }
       } catch (err: any) {
         throw err.response;
       }

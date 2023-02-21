@@ -2,7 +2,7 @@
   <div class="relative">
     <TransitionGroup tag="ul" name="post-list" :css="false">
       <li v-for="(tweet) in store.tweets" :key="tweet.id">
-        <PostCard class="mt-4" :post="tweet.post" />
+        <PostCard class="mt-4" :tweet="tweet" />
       </li>
     </TransitionGroup>
   </div>

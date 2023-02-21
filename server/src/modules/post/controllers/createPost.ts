@@ -12,6 +12,7 @@ const createPost = async (req: Request, res: Response) => {
   try {
     const userId = req.app.locals.userId;
     const mediaURL: string[] = [];
+
     if (images) {
       if (images instanceof Array) {
         for (let i = 0; i < images.length; i++) {
@@ -23,6 +24,7 @@ const createPost = async (req: Request, res: Response) => {
         mediaURL.push(result.url);
       }
     }
+
     const newPost = await prisma.post.create({
       data: {
         body: postDescription,

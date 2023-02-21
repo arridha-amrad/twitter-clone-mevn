@@ -3,7 +3,7 @@
   <div class="relative">
     <TransitionGroup name="post-list" tag="ul">
       <li v-for="post in comments" :key="post.id" class="mb-3">
-        <PostCard :post="post" />
+        <PostCard :tweet="post" />
       </li>
     </TransitionGroup>
   </div>
