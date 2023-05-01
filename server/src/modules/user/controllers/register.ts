@@ -1,13 +1,20 @@
 import { Request, Response } from "express";
 import prisma from "@/utils/prisma";
 import { hash } from "argon2";
+import { RegisterDTO } from "../user.types";
+import { toStartCase } from "../utils/toStartCase";
 
 const register = async (req: Request, res: Response) => {
-  const { email, username, password } = req.body;
+  const body = req.body as RegisterDTO;
+  const { email, username, password, firstName, lastName } =
+    req.body as RegisterDTO;
+
+  const fullname = toStartCase(`${firstName.trim()} ${lastName.trim()}`);
   try {
-    const hashedPassword = await hash(password);
+    const hashedPassword = await hash(password.trim());
     await prisma.user.create({
       data: {
+        fullname,
         email,
         password: hashedPassword,
         username,

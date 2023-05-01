@@ -1,12 +1,12 @@
 services:
   db:
-    container_name: pg_tc
+    container_name: pg__twitter__container
     image: postgres:alpine
     restart: always
     environment:
-      POSTGRES_USER: ari
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: twitter_clone
+      POSTGRES_USER: dwa
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: twitter
     ports:
       - "5432:5432"
     volumes:

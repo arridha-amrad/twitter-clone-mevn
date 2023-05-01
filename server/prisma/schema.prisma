@@ -13,6 +13,7 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   username  String   @unique
+  fullname  String
   email     String   @unique
   password  String
   imageURL  String   @default("default")
@@ -20,7 +21,7 @@ model User {
   updatedAt DateTime @updatedAt
   tokens    Token[]
   likes     Like[]
-  posts     Post[]   @relation("WrittenPosts")
+  posts     Post[]
   tweets    Tweet[]
 
   @@map("users")
@@ -38,10 +39,10 @@ model Token {
 }
 
 model Like {
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@id([postId, userId])
@@ -51,16 +52,13 @@ model Like {
 model Post {
   id        String   @id @default(cuid())
   body      String
-  author    User     @relation("WrittenPosts", fields: [authorId], references: [id])
-  authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  parentId  String?
-  parent    Post?    @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-  children  Post[]   @relation("ParentChild")
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id])
   likes     Like[]
   medias    Media[]
   tweets    Tweet[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("posts")
 }
@@ -69,6 +67,9 @@ model Tweet {
   id        String   @id @default(cuid())
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentId  String?
+  parent    Tweet?   @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Tweet[]  @relation("ParentChild")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   postId    String
@@ -79,7 +80,7 @@ model Tweet {
 }
 
 model Media {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   url       String
   post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
