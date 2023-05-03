@@ -16,8 +16,6 @@ CREATE TABLE "users" (
 CREATE TABLE "tokens" (
     "id" TEXT NOT NULL,
     "value" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "tokens_pkey" PRIMARY KEY ("id")
@@ -27,7 +25,6 @@ CREATE TABLE "tokens" (
 CREATE TABLE "likes" (
     "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "likes_pkey" PRIMARY KEY ("postId","userId")
 );
@@ -57,14 +54,12 @@ CREATE TABLE "tweets" (
 );
 
 -- CreateTable
-CREATE TABLE "media" (
+CREATE TABLE "files" (
     "id" SERIAL NOT NULL,
     "url" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "media_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "files_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -95,4 +90,4 @@ ALTER TABLE "tweets" ADD CONSTRAINT "tweets_userId_fkey" FOREIGN KEY ("userId") 
 ALTER TABLE "tweets" ADD CONSTRAINT "tweets_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "tweets"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "media" ADD CONSTRAINT "media_postId_fkey" FOREIGN KEY ("postId") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "files" ADD CONSTRAINT "files_postId_fkey" FOREIGN KEY ("postId") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
