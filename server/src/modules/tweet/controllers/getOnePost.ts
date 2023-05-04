@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import prisma from "@/utils/prisma";
-import { POST_INCLUDED_DATA, QUERY_AUTHOR_DATA } from "../post.constants";
+import { POST_INCLUDED_DATA, QUERY_AUTHOR_DATA } from "../tweet.constants";
 import { getPostParents } from "../utils/getPostParents";
 import { checkIsReTweet, findTweet } from "../services/tweetServices";
 import { findLike } from "@/modules/post/services/likeServices";
-import { IPostWithParentsAndChildren } from "../post.types";
+import { IPostWithParentsAndChildren } from "../tweet.types";
 
 const getOnePost = async (req: Request, res: Response) => {
   const { tweetId } = req.params;

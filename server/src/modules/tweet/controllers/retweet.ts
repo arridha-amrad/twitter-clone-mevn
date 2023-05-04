@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "@/utils/prisma";
 import { Tweet } from "@prisma/client";
-import { QUERY_AUTHOR_DATA } from "../post.constants";
+import { QUERY_AUTHOR_DATA } from "../tweet.constants";
 
 const reTweet = async (req: Request, res: Response) => {
   const { postId, isRetweet } = req.body;
@@ -23,9 +23,9 @@ const reTweet = async (req: Request, res: Response) => {
         },
         include: {
           user: {
-            select: QUERY_AUTHOR_DATA
-          }
-        }
+            select: QUERY_AUTHOR_DATA,
+          },
+        },
       });
     } else {
       tweet = await prisma.tweet.findFirst({
@@ -36,9 +36,9 @@ const reTweet = async (req: Request, res: Response) => {
         },
         include: {
           user: {
-            select: QUERY_AUTHOR_DATA
-          }
-        }
+            select: QUERY_AUTHOR_DATA,
+          },
+        },
       });
       if (!tweet) return res.sendStatus(404);
       await prisma.tweet.delete({ where: { id: tweet.id } });

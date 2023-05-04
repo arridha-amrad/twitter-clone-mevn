@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "@/utils/prisma";
-import { POST_INCLUDED_DATA } from "../post.constants";
+import { POST_INCLUDED_DATA } from "../tweet.constants";
 
 const getPostChildren = async (req: Request, res: Response) => {
   const { postId } = req.params;

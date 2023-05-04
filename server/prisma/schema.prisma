@@ -28,18 +28,20 @@ model User {
 }
 
 model Token {
-  id        String   @id @default(cuid())
-  value     String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  id     String @id @default(cuid())
+  value  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
   @@map("tokens")
 }
 
 model Like {
-  postId    String
-  userId    String
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  userId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([postId, userId])
   @@map("likes")
 }
@@ -50,17 +52,18 @@ model Post {
   authorId  String?
   author    User?    @relation(fields: [authorId], references: [id])
   likes     Like[]
-  medias    File[]
+  files     File[]
   tweets    Tweet[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
   @@map("posts")
 }
 
 model Tweet {
   id        String   @id @default(cuid())
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   parentId  String?
   parent    Tweet?   @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   children  Tweet[]  @relation("ParentChild")
@@ -69,13 +72,15 @@ model Tweet {
   postId    String
   userId    String
   isRetweet Boolean  @default(false)
+
   @@map("tweets")
 }
 
 model File {
-  id        Int      @id @default(autoincrement())
-  url       String
-  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String
+  id     Int    @id @default(autoincrement())
+  url    String
+  post   Post?  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+
   @@map("files")
 }

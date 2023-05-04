@@ -1,7 +1,7 @@
 import prisma from "@/utils/prisma";
 import { Tweet } from "@prisma/client";
-import { QUERY_AUTHOR_DATA } from "../post.constants";
-import { IPost } from "../post.types";
+import { QUERY_AUTHOR_DATA } from "../tweet.constants";
+import { IPost } from "../tweet.types";
 
 export const findTweet = async (postId: string, userId: string) => {
   const tweet = await prisma.tweet.findFirst({
@@ -19,18 +19,15 @@ export const findTweet = async (postId: string, userId: string) => {
   return tweet;
 };
 
-export const checkIsReTweet = async(
-  postId: string,
-  userId: string
-) => {
+export const checkIsReTweet = async (postId: string, userId: string) => {
   const tweet = await prisma.tweet.findFirst({
     where: {
       userId,
       postId,
-      isRetweet: true
-    }
-  })
-  return !!tweet
+      isRetweet: true,
+    },
+  });
+  return !!tweet;
 };
 
 export const createTweet = async (

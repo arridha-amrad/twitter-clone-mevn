@@ -1,8 +1,8 @@
-import { Media, Post, Tweet } from "@prisma/client";
+import { File, Post, Tweet } from "@prisma/client";
 
 export type IPostWithParentsAndChildren = IPostWithParents & {
-  children: IPostWithParents[]
-}
+  children: IPostWithParents[];
+};
 
 export type ITweet = Tweet & {
   post: IPostWithParents;
@@ -14,7 +14,7 @@ export type IPostWithParents = IPost & {
 
 export type IPost = Post & {
   author: IAuthor;
-  medias: Media[];
+  medias: File[];
   _count: IPostCount;
   isLiked: boolean;
   isRetweet: boolean;

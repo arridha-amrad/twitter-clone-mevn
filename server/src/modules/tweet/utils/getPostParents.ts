@@ -1,6 +1,6 @@
-import { IPost } from "../post.types";
+import { IPost } from "../tweet.types";
 import prisma from "@/utils/prisma";
-import { POST_INCLUDED_DATA } from "../post.constants";
+import { POST_INCLUDED_DATA } from "../tweet.constants";
 import { findLike } from "../services/likeServices";
 import { findTweet } from "../services/tweetServices";
 
