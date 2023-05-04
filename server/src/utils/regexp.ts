@@ -1,17 +1,17 @@
-export const usernameRegExp =
-	/^[a-z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-z0-9]){6,18}[a-z0-9]$/;
-// [a-zA-Z0-9] an alphanumeric THEN (
-//   _(?!\.) a _ not followed by a . OR
-//   \.(?!_) a . not followed by a _ OR
-//   [a-zA-Z0-9] an alphanumeric ) FOR
-//   {6,18} minimum 6 to maximum 18 times THEN
-//   [a-zA-Z0-9] an alphanumeric
+export const usernameRegExp = /^[a-z](_(?!\_|\.)|(.(?!\_|\.))|[a-z0-9]){4,14}$/;
+// must start with lowercase
+// can be followed by _ or . or lowercase-number.
+// but _ can't be followed by _ or .
+// . can't be followed by _ or .
+// total min length 5, max length 15
 
 export const passwordRegExp =
-	/^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])(?=.*[!@#$%*])[a-zA-Z\d!@#$%*]{6,}$/;
+  /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])(?=.*[!@#$%*])[a-zA-Z\d!@#$%*]{6,}$/;
 // requires 6 characters or more with combination at least one uppercase, one lowercase, one number and one symbol(! @ # $ % *)
 
 export const emailRegExp =
-	/^([\w\d\-\.]+)@([\w\d\-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
+  /^([\w\d\-\.]+)@([\w\d\-]+)\.([a-z]{2,5})(\.[a-z]{2,5})?$/;
 
-export const nameRegExp = /^[a-z -']+$/i;
+export const lastNameRegExp = /^[a-z\s\-\']+$/i;
+
+export const firstNameRegExp = /^[a-z\-\']+$/i;
